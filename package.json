@@ -1,12 +1,21 @@
 {
   "name": "unito",
   "version": "1.0.0",
-  "description": "",
+  "description": "REST Framework",
   "main": "app.js",
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/niteenautade/unito"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": {
+    "name": "Niteen Autade",
+    "email": "niteenautade@gmail.com",
+    "url": "https://github.com/niteenautade"
+  },
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
