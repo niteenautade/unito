@@ -14,7 +14,12 @@ var middlewares = require('require-all')({
   excludeDirs :  /^\.(git|svn)$/,
   recursive   : true
 });
-console.log(middlewares)
+
+var blueprints = middlewares.blueprints
+console.log(blueprints)
+console.log(controllers)
 mongoose = middlewares.mongooseconnection(mongoose)
+mongoose = middlewares.models
+
 app = middlewares.routes(app,controllers)
 module.exports = app
