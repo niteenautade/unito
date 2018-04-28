@@ -33,12 +33,34 @@ module.exports = function(){
                 res.status(500).json(error)
             })
         },
-        updateOne :function(req,res,next){
+        create :function(req,res,next){
             let modelName = services.modelName(req)
             console.log(req.Params,req.body)
-            services.Api[modelName].findOneAndUpdate({_id:req.params._id},{$set:{...req.body}},{new:true})
+            var newObj = new services.Api[modelName](req.body)
+            newObj.save()
             .then((data)=>{
-                console.log(data)
+                return res.json(data)
+            })
+            .catch((error)=>{
+                res.status(500).json(error)
+            })
+        },
+        update :function(req,res,next){
+            let modelName = services.modelName(req)
+            console.log(req.Params,req.body)
+            services.Api[modelName].findByIdAndUpdate(req.params._id,{$set:{...req.body}},{new:true})
+            .then((data)=>{
+                return res.json(data)
+            })
+            .catch((error)=>{
+                res.status(500).json(error)
+            })
+        },
+        destroy :function(req,res,next){
+            let modelName = services.modelName(req)
+            console.log(req.Params,req.body)
+            services.Api[modelName].findByIdAndRemove(req.params._id)
+            .then((data)=>{
                 return res.json(data)
             })
             .catch((error)=>{

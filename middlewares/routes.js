@@ -29,6 +29,17 @@ module.exports = function(app,controllers){
 				controllers[key].findOne
 			)
 		}
+		if(controllers[key].hasOwnProperty('create')){
+			var routeName = key.replace("Controller","")
+			app['post']('/'+routeName,
+				(req,res,next)=>{
+					services.reqParams(req)
+					req.models = app.models					
+					next()
+				},
+				controllers[key].create
+			)
+		}
 		if(controllers[key].hasOwnProperty('update')){
 			var routeName = key.replace("Controller","")
 			app['put']('/'+routeName+'/:_id',
@@ -38,6 +49,17 @@ module.exports = function(app,controllers){
 					next()
 				},
 				controllers[key].update
+			)
+		}
+		if(controllers[key].hasOwnProperty('destroy')){
+			var routeName = key.replace("Controller","")
+			app['delete']('/'+routeName+'/:_id',
+				(req,res,next)=>{
+					services.reqParams(req)
+					req.models = app.models					
+					next()
+				},
+				controllers[key].destroy
 			)
 		}
 	})
