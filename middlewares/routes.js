@@ -29,5 +29,16 @@ module.exports = function(app,controllers){
 				controllers[key].findOne
 			)
 		}
+		if(controllers[key].hasOwnProperty('update')){
+			var routeName = key.replace("Controller","")
+			app['put']('/'+routeName+'/:_id',
+				(req,res,next)=>{
+					services.reqParams(req)
+					req.models = app.models					
+					next()
+				},
+				controllers[key].update
+			)
+		}
 	})
 }

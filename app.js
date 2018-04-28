@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var express = require("express")
+var bodyParser = require('body-parser')
 var app = express()
 
 var controllers = require('require-all')({
@@ -27,7 +28,11 @@ var modelSchemas = require('require-all')({
   recursive   : true
 });
 
-
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json
+app.use(bodyParser.json())
 middlewares.blueprints(app)
 middlewares.mongooseconnection(mongoose)
 mongoose.Promise = Promise; 

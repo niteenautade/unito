@@ -32,7 +32,20 @@ module.exports = function(){
             .catch((error)=>{
                 res.status(500).json(error)
             })
-        }
+        },
+        updateOne :function(req,res,next){
+            let modelName = services.modelName(req)
+            console.log(req.Params,req.body)
+            services.Api[modelName].findOneAndUpdate({_id:req.params._id},{$set:{...req.body}},{new:true})
+            .then((data)=>{
+                console.log(data)
+                return res.json(data)
+            })
+            .catch((error)=>{
+                res.status(500).json(error)
+            })
+        },
+
 
     }
     return blueprints
