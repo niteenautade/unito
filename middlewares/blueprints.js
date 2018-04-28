@@ -15,16 +15,22 @@ module.exports = function(){
     var blueprints = {
         find : function(req,res,next){
             let modelName = services.modelName(req)
-            services.Api[modelName].find({...req.Params},function(err,data){
-                if(err) throw err;
-                res.json(data)
+            services.Api[modelName].find({...req.Params})
+            .then((data)=>{
+                return res.json(data)
+            })
+            .catch((error)=>{
+                res.status(500).json(error)
             })
         },
         findOne :function(req,res,next){
             let modelName = services.modelName(req)
-            services.Api[modelName].findOne({...req.Params},function(err,data){
-                if(err) throw err;
-                res.json(data)
+            services.Api[modelName].findOne({...req.Params})
+            .then((data)=>{
+                return res.json(data)
+            })
+            .catch((error)=>{
+                res.status(500).json(error)
             })
         }
 

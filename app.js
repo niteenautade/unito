@@ -30,6 +30,7 @@ var modelSchemas = require('require-all')({
 
 middlewares.blueprints(app)
 middlewares.mongooseconnection(mongoose)
+mongoose.Promise = Promise; 
 app.models = middlewares.models(mongoose,modelSchemas)
 services.Api.setModels(app.models)
 
