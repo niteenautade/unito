@@ -20,7 +20,7 @@ module.exports = function(app,controllers){
 		}
 		if(controllers[key].hasOwnProperty('findOne')){
 			var routeName = key.replace("Controller","")
-			app['get']('/'+routeName+'/:id',
+			app['get']('/'+routeName+'/:_id',
 				(req,res,next)=>{
 					services.reqParams(req)
 					req.models = app.models					

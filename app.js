@@ -31,6 +31,7 @@ var modelSchemas = require('require-all')({
 middlewares.blueprints(app)
 middlewares.mongooseconnection(mongoose)
 app.models = middlewares.models(mongoose,modelSchemas)
+services.Api.setModels(app.models)
 
 middlewares.routes(app,controllers)
 module.exports = app
