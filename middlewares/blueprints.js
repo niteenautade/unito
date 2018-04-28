@@ -11,11 +11,14 @@ var modelSchemas = require('require-all')({
     recursive   : true
 });
 var ObjectId = require('mongoose').Types.ObjectId
+var _ = require("lodash")
 module.exports = function(){
     var blueprints = {
         find : function(req,res,next){
             let modelName = services.modelName(req)
-            services.Api[modelName].find({...req.Params})
+            let paramsWithoutKeywords = removeKeywords(req.Params) //limit,populate
+            var query = services.Api[modelName].find({...paramsWithoutKeywords})
+            operations(query,req.Params)
             .then((data)=>{
                 return res.json(data)
             })
@@ -25,7 +28,7 @@ module.exports = function(){
         },
         findOne :function(req,res,next){
             let modelName = services.modelName(req)
-            services.Api[modelName].findOne({...req.Params})
+            services.Api[modelName].findOne({...req.params})
             .then((data)=>{
                 return res.json(data)
             })
@@ -72,3 +75,22 @@ module.exports = function(){
     }
     return blueprints
 }
+
+function operations(query,params) {
+    return Promise.resolve().then(()=>{
+        if(params.limit){
+            return query.limit(parseInt(params.limit))
+        }
+        else{
+            return query
+        }
+    })
+    .then(data=>data)
+    .catch(error=>error)
+}
+function removeKeywords(params){
+    var copy = _.cloneDeep(params)
+    delete copy.limit
+    delete copy.populate
+    return copy
+}   
