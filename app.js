@@ -14,10 +14,14 @@ var middlewares = require('require-all')({
   excludeDirs :  /^\.(git|svn)$/,
   recursive   : true
 });
+var services = require('require-all')({
+  dirname     :  __dirname+'/services',
+  filter      :   /(.+)\.js$/,
+  excludeDirs :  /^\.(git|svn)$/,
+  recursive   : true
+});
 
 var blueprints = middlewares.blueprints
-console.log(blueprints)
-console.log(controllers)
 mongoose = middlewares.mongooseconnection(mongoose)
 mongoose = middlewares.models
 
