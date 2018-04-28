@@ -11,7 +11,8 @@ module.exports = function(app,controllers){
 			var routeName = key.replace("Controller","")
 			app['get']('/'+routeName,
 				(req,res,next)=>{
-					req["Params"] = services.reqParams(req) 
+					services.reqParams(req)
+					req.models = app.models
 					next()
 				},
 				controllers[key].find
@@ -21,12 +22,12 @@ module.exports = function(app,controllers){
 			var routeName = key.replace("Controller","")
 			app['get']('/'+routeName+'/:id',
 				(req,res,next)=>{
-					req["Params"] = services.reqParams(req) 
+					services.reqParams(req)
+					req.models = app.models					
 					next()
 				},
 				controllers[key].findOne
 			)
 		}
 	})
-	return app
 }

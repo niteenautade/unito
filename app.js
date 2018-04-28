@@ -20,10 +20,17 @@ var services = require('require-all')({
   excludeDirs :  /^\.(git|svn)$/,
   recursive   : true
 });
+var modelSchemas = require('require-all')({
+  dirname     :  require("path").resolve('./models'),
+  filter      :   /(.+)\.js$/,
+  excludeDirs :  /^\.(git|svn)$/,
+  recursive   : true
+});
 
-var blueprints = middlewares.blueprints
-mongoose = middlewares.mongooseconnection(mongoose)
-mongoose = middlewares.models
 
-app = middlewares.routes(app,controllers)
+middlewares.blueprints(app)
+middlewares.mongooseconnection(mongoose)
+app.models = middlewares.models(mongoose,modelSchemas)
+
+middlewares.routes(app,controllers)
 module.exports = app
