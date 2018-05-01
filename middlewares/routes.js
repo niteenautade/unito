@@ -8,7 +8,7 @@ var services = require('require-all')({
 module.exports = function(app,controllers){
 	Object.keys(controllers).map(key => {
 		if(controllers[key].hasOwnProperty('find')){
-			var routeName = key.replace("controller","");console.log(routeName)
+			var routeName = key.replace("controller","");
 			app['get']('/'+routeName,
 				(req,res,next)=>{
 					services.reqParams(req);
@@ -19,7 +19,7 @@ module.exports = function(app,controllers){
 			)
 		}
 		if(controllers[key].hasOwnProperty('findOne')){
-			var routeName = key.replace("Controller","")
+			var routeName = key.replace("controller","")
 			app['get']('/'+routeName+'/:_id',
 				(req,res,next)=>{
 					services.reqParams(req)
@@ -30,7 +30,7 @@ module.exports = function(app,controllers){
 			)
 		}
 		if(controllers[key].hasOwnProperty('create')){
-			var routeName = key.replace("Controller","")
+			var routeName = key.replace("controller","");console.log(routeName)
 			app['post']('/'+routeName,
 				(req,res,next)=>{
 					services.reqParams(req)
@@ -41,7 +41,7 @@ module.exports = function(app,controllers){
 			)
 		}
 		if(controllers[key].hasOwnProperty('update')){
-			var routeName = key.replace("Controller","")
+			var routeName = key.replace("controller","")
 			app['put']('/'+routeName+'/:_id',
 				(req,res,next)=>{
 					services.reqParams(req)
@@ -52,7 +52,7 @@ module.exports = function(app,controllers){
 			)
 		}
 		if(controllers[key].hasOwnProperty('destroy')){
-			var routeName = key.replace("Controller","")
+			var routeName = key.replace("controller","")
 			app['delete']('/'+routeName+'/:_id',
 				(req,res,next)=>{
 					services.reqParams(req)
