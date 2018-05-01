@@ -30,7 +30,7 @@ module.exports = function(app,controllers){
 			)
 		}
 		if(controllers[key].hasOwnProperty('create')){
-			var routeName = key.replace("controller","");console.log(routeName)
+			var routeName = key.replace("controller","");
 			app['post']('/'+routeName,
 				(req,res,next)=>{
 					services.reqParams(req)

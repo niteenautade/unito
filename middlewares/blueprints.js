@@ -17,9 +17,22 @@ module.exports = function(){
         find : function(options){
             return function(req,res,next){
                 let modelName = services.modelName(req);
-                let paramsWithoutKeywords = removeKeywords(req.Params) //limit,populate,projection,sort
+                let reqParamsCopy = _.cloneDeep(req.Params)
+                if(reqParamsCopy && reqParamsCopy.where){
+                    reqParamsCopy.where = JSON.parse(reqParamsCopy.where)
+                    if(reqParamsCopy.populate && reqParamsCopy.where.populate){
+                        if(typeof(reqParamsCopy.populate)=="string" && reqParamsCopy.populate != reqParamsCopy.where.populate){
+                            reqParamsCopy.where.populate = [reqParamsCopy.where.populate,reqParamsCopy.populate]
+                        }
+                        else if(Array.isArray(reqParamsCopy.populate) && !reqParamsCopy.populate.includes(reqParamsCopy.where.populate)){
+                            reqParamsCopy.where.populate = [reqParamsCopy.where.populate, ...reqParamsCopy.populate]
+                        }
+                    }
+                    reqParamsCopy = { ...reqParamsCopy, ...reqParamsCopy.where }
+                }
+                let paramsWithoutKeywords = removeKeywords(reqParamsCopy) //limit,populate,projection,sort,where
                 var query = services.Api[modelName].find({...paramsWithoutKeywords})
-                operations(query,req.Params)
+                operations(query,reqParamsCopy)
                 .then((data)=>{
                     if(options && options.hasNext){
                         res.locals.data = data
@@ -176,6 +189,7 @@ function removeKeywords(params){
     delete copy.sort
     delete copy.populate
     delete copy.projection
+    delete copy.where
     return copy
 }   
 
