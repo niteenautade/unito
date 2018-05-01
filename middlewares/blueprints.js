@@ -77,19 +77,28 @@ module.exports = function(){
 }
 
 function operations(query,params) {
-    return Promise.resolve().then(()=>{console.log(params.populate)
+    return Promise.resolve()
+    .then(()=>{
+        if(params.projection){
+            if (!isStringObject(params.projection)) {
+                query = query.select(params.projection)
+            } else {
+                query = query.select(JSON.parse(params.projection))                
+            }
+        }
+    })
+    .then(()=>{
         if(params.limit){
-            return query.limit(parseInt(params.limit))
-        }else{
-            return query
+            query = query.limit(parseInt(params.limit))
         }
     })
     .then(()=>{
         if(params.populate){
-            return query.populate(params.populate)
-        }else{
-            return query
+            query = query.populate(params.populate)
         }
+    })
+    .then(()=>{
+        return query
     })
     .then(data=>data)
     .catch(error=>error)
@@ -98,5 +107,15 @@ function removeKeywords(params){
     var copy = _.cloneDeep(params)
     delete copy.limit
     delete copy.populate
+    delete copy.projection
     return copy
 }   
+
+function isStringObject(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}

@@ -9,7 +9,6 @@ module.exports = function(mongoose,modelSchemas){
                 modelSchema.attributes[key] = { type: mongoose.Schema.Types.ObjectId, ref: modelSchema.reference[key].model }
             })
         }
-        console.log(modelSchema.attributes)
         var schema = new mongoose.Schema(modelSchema.attributes,{collection:name,versionKey: false,timestamps:true })
         //convert_IdToId(schema)
         models[schemaName] = mongoose.model(schemaName,schema ) 
