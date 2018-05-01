@@ -7,7 +7,10 @@ var controllers = require('require-all')({
   dirname     :  require("path").resolve('./controllers'),
   filter      :  /(.+Controller)\.js$/,
   excludeDirs :  /^\.(git|svn)$/,
-  recursive   : true
+  recursive   : true,
+  map     : function (name, path) {
+    return name.toLowerCase()
+  }
 });
 var middlewares = require('require-all')({
   dirname     :  __dirname+'/middlewares',
@@ -25,7 +28,10 @@ var modelSchemas = require('require-all')({
   dirname     :  require("path").resolve('./models'),
   filter      :   /(.+)\.js$/,
   excludeDirs :  /^\.(git|svn)$/,
-  recursive   : true
+  recursive   : true,
+  map     : function (name, path) {
+    return name.toLowerCase()
+  }
 });
 
 // parse application/x-www-form-urlencoded

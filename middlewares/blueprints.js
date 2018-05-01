@@ -16,7 +16,7 @@ module.exports = function(){
     var blueprints = {
         find : function(options){
             return function(req,res,next){
-                let modelName = services.modelName(req)
+                let modelName = services.modelName(req);
                 let paramsWithoutKeywords = removeKeywords(req.Params) //limit,populate,projection,sort
                 var query = services.Api[modelName].find({...paramsWithoutKeywords})
                 operations(query,req.Params)

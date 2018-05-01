@@ -8,11 +8,11 @@ var services = require('require-all')({
 module.exports = function(app,controllers){
 	Object.keys(controllers).map(key => {
 		if(controllers[key].hasOwnProperty('find')){
-			var routeName = key.replace("Controller","")
+			var routeName = key.replace("controller","");console.log(routeName)
 			app['get']('/'+routeName,
 				(req,res,next)=>{
-					services.reqParams(req)
-					req.models = app.models
+					services.reqParams(req);
+					req.models = app.models;
 					next()
 				},
 				controllers[key].find
