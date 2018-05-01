@@ -77,11 +77,17 @@ module.exports = function(){
 }
 
 function operations(query,params) {
-    return Promise.resolve().then(()=>{
+    return Promise.resolve().then(()=>{console.log(params.populate)
         if(params.limit){
             return query.limit(parseInt(params.limit))
+        }else{
+            return query
         }
-        else{
+    })
+    .then(()=>{
+        if(params.populate){
+            return query.populate(params.populate)
+        }else{
             return query
         }
     })
