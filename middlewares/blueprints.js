@@ -14,66 +14,96 @@ var ObjectId = require('mongoose').Types.ObjectId
 var _ = require("lodash")
 module.exports = function(){
     var blueprints = {
-        find : function(){
+        find : function(options){
             return function(req,res,next){
                 let modelName = services.modelName(req)
                 let paramsWithoutKeywords = removeKeywords(req.Params) //limit,populate,projection,sort
                 var query = services.Api[modelName].find({...paramsWithoutKeywords})
                 operations(query,req.Params)
                 .then((data)=>{
-                    return res.json(data)
+                    if(options && options.hasNext){
+                        res.locals.data = data
+                        next()
+                    }
+                    else{
+                        return res.json(data)
+                    }
                 })
                 .catch((error)=>{
                     res.status(500).json(error)
                 })
             }
         },
-        findOne :function(){
+        findOne :function(options){
             return function(req,res,next){
                 let modelName = services.modelName(req)
                 services.Api[modelName].findOne({...req.params})
                 .then((data)=>{
-                    return res.json(data)
+                    if(options && options.hasNext){
+                        res.locals.data = data
+                        next()
+                    }
+                    else{
+                        return res.json(data)
+                    }
                 })
                 .catch((error)=>{
                     res.status(500).json(error)
                 })
             }
         },
-        create : function(){
+        create : function(options){
             return function(req,res,next){
                 let modelName = services.modelName(req)
                 console.log(req.Params,req.body)
                 var newObj = new services.Api[modelName](req.body)
                 newObj.save()
                 .then((data)=>{
-                    return res.json(data)
+                    if(options && options.hasNext){
+                        res.locals.data = data
+                        next()
+                    }
+                    else{
+                        return res.json(data)
+                    }
                 })
                 .catch((error)=>{
                     res.status(500).json(error)
                 })
             }
         },
-        update : function(){
+        update : function(options){
             return function(req,res,next){
                 let modelName = services.modelName(req)
                 console.log(req.Params,req.body)
                 services.Api[modelName].findByIdAndUpdate(req.params._id,{$set:{...req.body}},{new:true})
                 .then((data)=>{
-                    return res.json(data)
+                    if(options && options.hasNext){
+                        res.locals.data = data
+                        next()
+                    }
+                    else{
+                        return res.json(data)
+                    }
                 })
                 .catch((error)=>{
                     res.status(500).json(error)
                 })
             }
         },
-        destroy : function(){
+        destroy : function(options){
             return function(req,res,next){
                 let modelName = services.modelName(req)
                 console.log(req.Params,req.body)
                 services.Api[modelName].findByIdAndRemove(req.params._id)
                 .then((data)=>{
-                    return res.json(data)
+                    if(options && options.hasNext){
+                        res.locals.data = data
+                        next()
+                    }
+                    else{
+                        return res.json(data)
+                    }
                 })
                 .catch((error)=>{
                     res.status(500).json(error)
