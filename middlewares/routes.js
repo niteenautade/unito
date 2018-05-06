@@ -11,7 +11,7 @@ module.exports = function(app,controllers){
 			var routeName = key.replace("controller","");
 			app['get']('/'+routeName,
 				(req,res,next)=>{
-					services.reqParams(req);
+					services.aggregateParams(req);
 					req.models = app.models;
 					next()
 				},
@@ -22,7 +22,7 @@ module.exports = function(app,controllers){
 			var routeName = key.replace("controller","")
 			app['get']('/'+routeName+'/:_id',
 				(req,res,next)=>{
-					services.reqParams(req)
+					services.aggregateParams(req)
 					req.models = app.models					
 					next()
 				},
@@ -33,7 +33,7 @@ module.exports = function(app,controllers){
 			var routeName = key.replace("controller","");
 			app['post']('/'+routeName,
 				(req,res,next)=>{
-					services.reqParams(req)
+					services.aggregateParams(req)
 					req.models = app.models					
 					next()
 				},
@@ -44,7 +44,7 @@ module.exports = function(app,controllers){
 			var routeName = key.replace("controller","")
 			app['put']('/'+routeName+'/:_id',
 				(req,res,next)=>{
-					services.reqParams(req)
+					services.aggregateParams(req)
 					req.models = app.models					
 					next()
 				},
@@ -55,7 +55,7 @@ module.exports = function(app,controllers){
 			var routeName = key.replace("controller","")
 			app['delete']('/'+routeName+'/:_id',
 				(req,res,next)=>{
-					services.reqParams(req)
+					services.aggregateParams(req)
 					req.models = app.models					
 					next()
 				},

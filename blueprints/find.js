@@ -23,8 +23,8 @@ module.exports = function(options){
             }
             reqParamsCopy = { ...reqParamsCopy, ...reqParamsCopy.where }
         }
-        let paramsWithoutKeywords = removeKeywords(reqParamsCopy) //limit,populate,projection,sort,where
-        var query = services.Api[modelName].find({...paramsWithoutKeywords})
+        let paramsWithoutKeywords = removeKeywords(reqParamsCopy) //limit,populate,projection,skip,sort,where
+        var query = services.Api[modelName].find({...paramsWithoutKeywords},null)
         operations(query,reqParamsCopy)
         .then((data)=>{
             if(options && options.hasNext){

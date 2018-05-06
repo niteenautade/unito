@@ -4,6 +4,11 @@ var isStringObject = require('./utils/isStringObject')
 module.exports = function operations(query,params) {
     return Promise.resolve()
     .then(()=>{
+        if(params.skip){
+            query = query.skip(Number(params.skip))
+        }
+    })
+    .then(()=>{
         if(params.projection){
             if(isStringObject(params.projection)){
                 if(isObjectArray(params.projection)){

@@ -8,7 +8,6 @@ var services = require('require-all')({
 module.exports = function(options){
     return function(req,res,next){
         let modelName = services.modelName(req)
-        console.log(req.Params,req.body)
         var newObj = new services.Api[modelName](req.body)
         newObj.save()
         .then((data)=>{
@@ -17,7 +16,7 @@ module.exports = function(options){
                 next()
             }
             else{
-                return res.json(data)
+                return res.status(201).json(data)
             }
         })
         .catch((error)=>{
