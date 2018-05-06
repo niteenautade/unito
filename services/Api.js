@@ -1,8 +1,13 @@
 module.exports = new function(){
     this.setModels = function(models){
-        var keys = Object.keys(models)
-        keys.forEach(key=>{
-            this[key] = models[key]
+        var modelnames = Object.keys(models)
+        modelnames.forEach(modelname=>{
+            this[modelname] = models[modelname]
+
+            //Replacing update method to findOneAndUpdate
+            this[modelname].update = function(query,update,options){
+                return models[modelname]["findOneAndUpdate"](query,update,{new:true,...options})
+            }
         })
     }
     return this

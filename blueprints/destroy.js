@@ -8,7 +8,6 @@ var services = require('require-all')({
 module.exports = function(options){
     return function(req,res,next){
         let modelName = services.modelName(req)
-        console.log(req.Params,req.body)
         services.Api[modelName].findByIdAndRemove(req.params._id)
         .then((data)=>{
             if(options && options.hasNext){
