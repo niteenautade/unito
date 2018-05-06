@@ -33,6 +33,15 @@ var modelSchemas = require('require-all')({
     return name.toLowerCase()
   }
 });
+var config = require('require-all')({
+  dirname     :  require("path").resolve('./config'),
+  filter      :   /(.+)\.js$/,
+  excludeDirs :  /^\.(git|svn)$/,
+  recursive   : true,
+  map     : function (name, path) {
+    return name.toLowerCase()
+  }
+});
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -42,7 +51,7 @@ app.use(bodyParser.json())
 middlewares.blueprints(app)
 middlewares.mongooseconnection(mongoose)
 mongoose.Promise = Promise; 
-app.models = middlewares.models(mongoose,modelSchemas)
+app.models = middlewares.models(mongoose,modelSchemas,config)
 services.Api.setModels(app.models)
 
 middlewares.routes(app,controllers)
