@@ -4,7 +4,7 @@ var bodyParser = require('body-parser')
 var app = express()
 
 var controllers = require('require-all')({
-  dirname     :  require("path").resolve('./controllers'),
+  dirname     :  require("path").resolve('./api/controllers'),
   filter      :  /(.+Controller)\.js$/,
   excludeDirs :  /^\.(git|svn)$/,
   recursive   : true,
@@ -25,7 +25,7 @@ var services = require('require-all')({
   recursive   : true
 });
 var modelSchemas = require('require-all')({
-  dirname     :  require("path").resolve('./models'),
+  dirname     :  require("path").resolve('./api/models'),
   filter      :   /(.+)\.js$/,
   excludeDirs :  /^\.(git|svn)$/,
   recursive   : true,

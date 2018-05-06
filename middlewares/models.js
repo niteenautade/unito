@@ -10,7 +10,7 @@ module.exports = function(mongoose,modelSchemas){
             })
         }
         var schema = new mongoose.Schema(modelSchema.attributes,{collection:name,versionKey: false,timestamps:true })
-        convert_IdToId(schema)
+        //convert_IdToId(schema)
         models[schemaName] = mongoose.model(schemaName,schema ) 
     });
     return models

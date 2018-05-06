@@ -10,7 +10,7 @@ module.exports = function(){
         find : (options)=>blueprints.find(options),
         findOne :(options)=>blueprints.findOne(options),
         create : (options)=>blueprints.create(options),
-        update : (options)=>blueprints.create(options),
+        update : (options)=>blueprints.update(options),
         destroy : (options)=>blueprints.destroy(options)
     }
     return blueprintController
