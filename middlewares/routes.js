@@ -13,6 +13,7 @@ module.exports = function(app,controllers){
 				(req,res,next)=>{
 					services.aggregateParams(req);
 					req.models = app.models;
+					services.reqValidate(req)
 					next()
 				},
 				controllers[key].find
@@ -23,7 +24,8 @@ module.exports = function(app,controllers){
 			app['get']('/'+routeName+'/:_id',
 				(req,res,next)=>{
 					services.aggregateParams(req)
-					req.models = app.models					
+					req.models = app.models		
+					services.reqValidate(req)								
 					next()
 				},
 				controllers[key].findOne
@@ -34,7 +36,8 @@ module.exports = function(app,controllers){
 			app['post']('/'+routeName,
 				(req,res,next)=>{
 					services.aggregateParams(req)
-					req.models = app.models					
+					req.models = app.models	
+					services.reqValidate(req)									
 					next()
 				},
 				controllers[key].create
@@ -45,7 +48,8 @@ module.exports = function(app,controllers){
 			app['put']('/'+routeName+'/:_id',
 				(req,res,next)=>{
 					services.aggregateParams(req)
-					req.models = app.models					
+					req.models = app.models	
+					services.reqValidate(req)									
 					next()
 				},
 				controllers[key].update
@@ -56,7 +60,8 @@ module.exports = function(app,controllers){
 			app['delete']('/'+routeName+'/:_id',
 				(req,res,next)=>{
 					services.aggregateParams(req)
-					req.models = app.models					
+					req.models = app.models
+					services.reqValidate(req)									
 					next()
 				},
 				controllers[key].destroy
