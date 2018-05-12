@@ -6,10 +6,17 @@ module.exports = function(mongoose,modelSchemas,config){
         if(modelSchema.reference){
             let keys = Object.keys(modelSchema.reference)
             keys.forEach(key=>{
-                modelSchema.attributes[key] = { type: mongoose.Schema.Types.ObjectId, ref: modelSchema.reference[key].model }
+                modelSchema.attributes.properties[key] = { type: mongoose.Schema.Types.ObjectId, ref: modelSchema.reference[key].model }
             })
         }
-        var schema = new mongoose.Schema(modelSchema.attributes,{collection:name,versionKey: false,timestamps:true })
+        var options = {collection:name,versionKey: false,timestamps:true }
+        if(!modelSchema.attributes.hasOwnProperty("additionalProperties")){
+            options.strict = false
+        }
+        else{
+            options.strict = !modelSchema.attributes.additionalProperties            
+        }
+        var schema = new mongoose.Schema(modelSchema.attributes.properties,options)
         if(config && config.middlewares && config.middlewares._idtoid){
             convert_IdToId(schema)
         }
