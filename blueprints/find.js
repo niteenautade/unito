@@ -16,7 +16,7 @@ module.exports = function(options){
 
         let paramsWithoutKeywords = removeKeywords(reqParamsCopy) //limit,populate,projection,skip,sort,where
         
-        var query = services.Api[modelName].find({...paramsWithoutKeywords},null)
+        var query = services.mongooseApi[modelName].find({...paramsWithoutKeywords},null)
         cursorOperations(query,reqParamsCopy)
         .then((data)=>{
             if(options && options.hasNext){

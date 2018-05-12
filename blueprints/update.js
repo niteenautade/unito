@@ -8,7 +8,7 @@ var services = require('require-all')({
 module.exports = function(options){
     return function(req,res,next){
         let modelName = services.modelName(req)
-        services.Api[modelName].findByIdAndUpdate(req.params._id,{$set:{...req.body}},{new:true})
+        services.mongooseApi[modelName].findByIdAndUpdate(req.params._id,{$set:{...req.body}},{new:true})
         .then((data)=>{
             if(options && options.hasNext){
                 res.locals.data = data
