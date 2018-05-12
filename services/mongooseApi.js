@@ -8,9 +8,8 @@ module.exports = new function(){
             this[modelname].update = function(query,update,options){
                 return models[modelname]["findOneAndUpdate"](query,update,{new:true,...options})
             }
-
-            
         })
+        delete this.setModels
     }
     return this
 }

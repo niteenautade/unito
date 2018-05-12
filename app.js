@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var express = require("express")
 var bodyParser = require('body-parser')
+var customApi = require('./api')
 var app = express()
 
 var controllers = require('require-all')({
@@ -52,7 +53,9 @@ middlewares.blueprints(app)
 middlewares.mongooseconnection(mongoose)
 mongoose.Promise = Promise; 
 app.models = middlewares.models(mongoose,modelSchemas,config)
-services.Api.setModels(app.models)
+services.mongooseApi.setModels(app.models)
+
+customApi.setCustomApi(services,config)
 
 middlewares.routes(app,controllers)
 module.exports = app

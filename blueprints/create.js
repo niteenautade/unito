@@ -8,7 +8,7 @@ var services = require('require-all')({
 module.exports = function(options){
     return function(req,res,next){
         let modelName = services.modelName(req)
-        var newObj = new services.Api[modelName](req.body)
+        var newObj = new services.mongooseApi[modelName](req.body)
         newObj.save()
         .then((data)=>{
             if(options && options.hasNext){
