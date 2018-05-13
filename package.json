@@ -20,7 +20,9 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "jsonwebtoken": "^8.2.1",
     "lodash": "^4.17.10",
+    "moment-timezone": "^0.5.17",
     "mongoose": "^5.0.1",
     "require-all": "^2.2.0"
   }
