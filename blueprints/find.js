@@ -19,18 +19,26 @@ var config = require('require-all')({
 module.exports = function(options){
     return function(req,res,next){
         let modelName = services.modelName(req);
-        if(config && config.middlewares && config.middlewares._idtoid){
-            services.id2_id(req.params)
-            services.id2_id(req.Params)
-        }
+        services.id2_id(req.params)
+        services.id2_id(req.Params)
         let reqParamsCopy = _.cloneDeep(req.Params)
 
-        paramsMergeIntoWhere(reqParamsCopy)
-
-        let paramsWithoutKeywords = removeKeywords(reqParamsCopy) //limit,populate,projection,skip,sort,where
+        let paramsWithoutKeywords = removeKeywords(reqParamsCopy) //limit,populate,projection,skip,sort,where,count
+        paramsMergeIntoWhere(reqParamsCopy,paramsWithoutKeywords)
         
-        var query = services.mongooseApi[modelName].find({...paramsWithoutKeywords},null)
+        var query = services.mongooseApi[modelName].find(reqParamsCopy.where,null)
         cursorOperations(query,reqParamsCopy)
+        .then(data=>{
+            if(Array.isArray(data)){
+                return data.map(a=>{
+                    services._id2id(a._doc)
+                    return a._doc
+                })
+            }
+            else{
+                return data
+            }
+        })
         .then((data)=>{
             if(options && options.hasNext){
                 res.locals.data = data
@@ -41,22 +49,18 @@ module.exports = function(options){
             }
         })
         .catch((error)=>{
+            console.log("Error",error)
             res.status(500).json(error)
         })
     }
 }
 
-function paramsMergeIntoWhere(reqParamsCopy){
-    if(reqParamsCopy && reqParamsCopy.where){
-        reqParamsCopy.where = JSON.parse(reqParamsCopy.where)
-        if(reqParamsCopy.populate && reqParamsCopy.where.populate){
-            if(typeof(reqParamsCopy.populate)=="string" && reqParamsCopy.populate != reqParamsCopy.where.populate){
-                reqParamsCopy.where.populate = [reqParamsCopy.where.populate,reqParamsCopy.populate]
-            }
-            else if(Array.isArray(reqParamsCopy.populate) && !reqParamsCopy.populate.includes(reqParamsCopy.where.populate)){
-                reqParamsCopy.where.populate = [reqParamsCopy.where.populate, ...reqParamsCopy.populate]
-            }
-        }
-        reqParamsCopy = { ...reqParamsCopy, ...reqParamsCopy.where }
+function paramsMergeIntoWhere(reqParamsCopy,paramsWithoutKeywords){
+    if(reqParamsCopy){
+        reqParamsCopy.where = reqParamsCopy.where ? reqParamsCopy.where : {}
+        reqParamsCopy.where = {...reqParamsCopy.where,...paramsWithoutKeywords}        
     }
+    return reqParamsCopy
+    console.log("After",reqParamsCopy)
+    
 }

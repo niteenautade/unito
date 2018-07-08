@@ -8,8 +8,8 @@ var config = require('require-all')({
     }
   });
 module.exports = function(obj){
-    if(config && config.middlewares && config.middlewares._idtoid && obj && obj.id){
-        obj._id = obj.id
-        delete obj.id
+    if(config && config.middlewares && config.middlewares._idtoid && obj && obj._id){
+        obj.id = obj._id
+        delete obj._id
     }
 }

@@ -1,3 +1,4 @@
+var _id2id = require("./_id2id")
 module.exports = new function(){
     this.setModels = function(models){
         var modelnames = Object.keys(models)
@@ -8,6 +9,7 @@ module.exports = new function(){
             this[modelname].update = function(query,update,options){
                 return models[modelname]["findOneAndUpdate"](query,update,{new:true,...options})
             }
+            
         })
         delete this.setModels
     }

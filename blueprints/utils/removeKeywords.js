@@ -7,5 +7,6 @@ module.exports = function (params){
     delete copy.populate
     delete copy.projection
     delete copy.where
+    delete copy.count
     return copy
 }  

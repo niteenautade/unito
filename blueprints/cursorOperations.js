@@ -1,8 +1,22 @@
 var isObjectArray = require('./utils/isObjectArray')
 var isStringObject = require('./utils/isStringObject')
+var config = require('require-all')({
+    dirname     :  require("path").resolve('./config'),
+    filter      :   /(.+)\.js$/,
+    excludeDirs :  /^\.(git|svn)$/,
+    recursive   : true,
+    map     : function (name, path) {
+      return name.toLowerCase()
+    }
+  });
 
 module.exports = function operations(query,params) {
     return Promise.resolve()
+    .then(()=>{
+        if(params.count){
+            query = query.count(params.where)
+        }
+    })
     .then(()=>{
         if(params.skip){
             query = query.skip(Number(params.skip))
@@ -28,6 +42,12 @@ module.exports = function operations(query,params) {
     .then(()=>{
         if(params.limit){
             query = query.limit(parseInt(params.limit))
+        }
+        else if(config && config.middlewares && config.middlewares.defaultLimit){
+            query = query.limit(config.middlewares.defaultLimit)
+        }
+        else{
+            query = query.limit(50)            
         }
     })
     .then(()=>{
@@ -58,5 +78,4 @@ module.exports = function operations(query,params) {
         return query
     })
     .then(data=>data)
-    .catch(error=>error)
 }

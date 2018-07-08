@@ -16,11 +16,13 @@ var config = require('require-all')({
 module.exports = function(options){
     return function(req,res,next){
         let modelName = services.modelName(req)
-        if(config && config.middlewares && config.middlewares._idtoid){
-            services.id2_id(req.params)
-            services.id2_id(req.Params)
-        }
+        services.id2_id(req.params)
+        services.id2_id(req.Params)
         services.mongooseApi[modelName].findByIdAndRemove(req.params._id)
+        .then(data=>{
+            services._id2id(data._doc)
+            return data._doc
+        })
         .then((data)=>{
             if(options && options.hasNext){
                 res.locals.data = data

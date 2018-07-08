@@ -1,7 +1,17 @@
 module.exports = function(query,model,config,services,mongooseApi){
     query = !query ? {} : query
-    if(config && config.middlewares && config.middlewares._idtoid){
-        services.id2_id(query)
-    }
+    services.id2_id(query)
     return mongooseApi[model]['find'](query)
+    .then(data=>{
+        if(Array.isArray(data)){
+            return data.map(a=>{
+                services._id2id(a._doc)
+                return a._doc
+            })
+        }
+        else{
+            return data
+        }
+    })
+    
 }
