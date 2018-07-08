@@ -3,6 +3,7 @@ module.exports = function(app,controllers,key,routeName,services){
     if(newRoutes.length > 0){
         newRoutes.forEach(newRoute => {
             app['all']('/'+routeName+'/'+newRoute,
+                services.connectBusboy,        
                 (req,res,next)=>{
                     services.aggregateParams(req)
                     req.models = app.models
