@@ -50,6 +50,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 middlewares.blueprints(app)
+middlewares.connectBusboy(app)
 middlewares.mongooseconnection(mongoose)
 mongoose.Promise = Promise; 
 app.models = middlewares.models(mongoose,modelSchemas,config)

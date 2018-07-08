@@ -16,10 +16,15 @@ var config = require('require-all')({
 module.exports = function(options){
     return function(req,res,next){
         let modelName = services.modelName(req)
-        services.id2_id(req.params)
-        services.id2_id(req.Params)
         var newObj = new services.mongooseApi[modelName](req.body)
-        newObj.save()
+
+        Promise.resolve()
+        .then(()=>{
+            if(Object.keys(req.Params).length==0){
+                throw {msg:"No parameters supplied",status:400}
+            }
+            return newObj.save()
+        })
         .then(data=>{
             services._id2id(data._doc)
             return data._doc
@@ -34,7 +39,12 @@ module.exports = function(options){
             }
         })
         .catch((error)=>{
-            res.status(500).json(error)
+            if(error.status && error.msg){
+                return res.status(error.status).json(error)
+            }
+            else{
+                return res.status(500).json(error)
+            }
         })
     }
 }

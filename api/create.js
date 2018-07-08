@@ -1,6 +1,5 @@
 module.exports = function(obj,model,config,services,mongooseApi){
     obj = !obj ? {} : obj
-    services.id2_id(obj)
     let newObj = new mongooseApi[model](obj)
     return newObj.save()
     .then(data=>data)
