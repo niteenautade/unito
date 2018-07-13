@@ -1,6 +1,6 @@
 module.exports = function isStringObject(str) {
     str = JSON.stringify(str);
-    str = JSON.parse(str);console.log(str,typeof(str))
+    str = JSON.parse(str);
     if(typeof(str)=="string"){
         try {
             str = JSON.parse(str)
