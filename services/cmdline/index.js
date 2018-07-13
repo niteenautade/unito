@@ -4,6 +4,12 @@ var argv = require('yargs').argv
 var path = require("path")
 var fs = require('fs')
 var config = require('./config')()
+var templates = require('require-all')({
+    dirname     :  __dirname + '/templates',
+    filter      :   /(.+)\.js$/,
+    excludeDirs :  /^\.(git|svn)$/,
+    recursive   : true
+})
 
 function createDirectory(dir){
     if (!fs.existsSync(dir)){
@@ -21,6 +27,10 @@ if(argv["_"][0]==="init"){
         "./config"
     ]
     arr.forEach(a => createDirectory(a))
+
+    fs.writeFileSync(path.resolve(process.cwd(),"config/middlewares.js"),templates.middlewares() )
+    fs.writeFileSync(path.resolve(process.cwd(),"config/mongoconnection.js"),templates.mongoconnection() )
+    fs.writeFileSync(path.resolve(process.cwd(),"config/token.js"),templates.token() )
 
 }
 else{
