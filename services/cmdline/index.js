@@ -10,7 +10,8 @@ var templates = require('require-all')({
     excludeDirs :  /^\.(git|svn)$/,
     recursive   : true
 })
-
+var cmd=require('node-cmd');
+ 
 function createDirectory(dir){
     if (!fs.existsSync(dir)){
         fs.mkdirSync(dir);
@@ -27,11 +28,16 @@ if(argv["_"][0]==="init"){
         "./config"
     ]
     arr.forEach(a => createDirectory(a))
-
+    
     fs.writeFileSync(path.resolve(process.cwd(),"config/middlewares.js"),templates.middlewares() )
     fs.writeFileSync(path.resolve(process.cwd(),"config/mongoconnection.js"),templates.mongoconnection() )
     fs.writeFileSync(path.resolve(process.cwd(),"config/token.js"),templates.token() )
-
+    fs.writeFileSync(path.resolve(process.cwd(),"app.js"),templates.app() )
+    fs.writeFileSync(path.resolve(process.cwd(),"package.json"),templates.package() )
+    cmd.run("unito --model user")
+    cmd.run("unito --controller user")
+    cmd.run("npm i")
+    console.log("<<<<< Project successfully initiated >>>>>")
 }
 else{
     var keys = Object.keys(config)
