@@ -7,7 +7,7 @@ module.exports = function(){
         },
         "controller" : {
             "template" : "./templates/controller",
-            "output" : "./controllers/",
+            "output" : "./api/controllers/",
             "suffix" : "Controller.js"
         }
     }
