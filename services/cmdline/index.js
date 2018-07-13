@@ -5,21 +5,23 @@ var path = require("path")
 var fs = require('fs')
 var config = require('./config')()
 
-function createDirectory(path){
-    if (!fs.existsSync(path)){
-        fs.mkdirSync(path);
+function createDirectory(dir){
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+        console.log("Created "+dir)
     }
 }
 
 if(argv["_"][0]==="init"){
     var arr = [
-        "api",
-        "api/controllers",
-        "api/models",
-        "api/services",
-        "config"
-
+        "./api",
+        "./api/controllers",
+        "./api/models",
+        "./api/services",
+        "./config"
     ]
+    arr.forEach(a => createDirectory(a))
+
 }
 else{
     var keys = Object.keys(config)
