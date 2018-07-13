@@ -36,7 +36,19 @@ if(argv["_"][0]==="init"){
     fs.writeFileSync(path.resolve(process.cwd(),"package.json"),templates.package() )
     cmd.run("unito --model user")
     cmd.run("unito --controller user")
-    cmd.run("npm i")
+    const processRef=cmd.get('npm i');
+    let data_line = '';
+    
+    //listen to the python terminal output
+    processRef.stdout.on(
+    'data',
+    function(data) {
+        data_line += data;
+        if (data_line[data_line.length-1] == '\n') {
+        console.log(data_line);
+        }
+    }
+    );
     console.log("<<<<< Project successfully initiated >>>>>")
 }
 else{
