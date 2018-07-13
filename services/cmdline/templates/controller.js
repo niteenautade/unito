@@ -1,6 +1,9 @@
 module.exports = function(name){
 var template =
-`var blueprints = require("unito/middlewares/blueprints")()
+`--------------------------------------------------------------------------
+Name : ${name[0].toUpperCase()}${name.substr(1).toLowerCase()}Controller
+--------------------------------------------------------------------------
+var blueprints = require("unito/middlewares/blueprints")()
 var Api = require("unito/api")
 
 module.exports = {
