@@ -1,8 +1,8 @@
 module.exports = function(model){
     var template = 
-`--------------------------------------------------------------------------
+`/*--------------------------------------------------------------------------
 Model : ${model[0].toUpperCase()}${model.substr(1).toLowerCase()}
---------------------------------------------------------------------------
+--------------------------------------------------------------------------*/
 var Schema = require('unito/node_modules/mongoose').Schema
 var ObjectId = require('unito/node_modules/mongoose').Schema.Types.ObjectId
 
