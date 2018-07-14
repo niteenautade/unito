@@ -39,12 +39,7 @@ module.exports = function(options){
             }
         })
         .catch((error)=>{
-            if(error.status && error.msg){
-                return res.status(error.status).json(error)
-            }
-            else{
-                return res.status(500).json(error)
-            }
+            res.status(500).json(error)
         })
     }
 }

@@ -49,7 +49,6 @@ module.exports = function(options){
             }
         })
         .catch((error)=>{
-            console.log("Error",error)
             res.status(500).json(error)
         })
     }

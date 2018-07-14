@@ -10,8 +10,8 @@ module.exports = function(app,controllers,key,routeName,services,middlewares){
             },
             middlewares.acl,
             middlewares.connectBusboy,        
+            middlewares.aggregateParams,
             (req,res,next)=>{
-                services.aggregateParams(req)
                 req.models = app.models	
                 services.reqValidate(req)									
                 next()

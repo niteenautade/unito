@@ -20,6 +20,9 @@ module.exports = function(options){
         services.id2_id(req.Params)
         services.mongooseApi[modelName].findByIdAndUpdate(req.params._id,{$set:{...req.body}},{new:true})
         .then(data=>{
+            if(!data){
+                throw {status:404,msg:"Not found"}
+            }
             services._id2id(data._doc)
             return data._doc
         })
@@ -33,7 +36,12 @@ module.exports = function(options){
             }
         })
         .catch((error)=>{
-            res.status(500).json(error)
+            if(error.status && error.msg){
+                return res.status(error.status).json(error)
+            }
+            else{
+                return res.status(500).json(error)
+            }
         })
     }
 }

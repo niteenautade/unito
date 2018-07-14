@@ -9,8 +9,8 @@ module.exports = function(app,controllers,key,routeName,services,middlewares){
                 next()
             },
             middlewares.acl,
+            middlewares.aggregateParams,
             (req,res,next)=>{
-                services.aggregateParams(req);
                 req.models = app.models;
                 services.reqValidate(req)
                 next()
