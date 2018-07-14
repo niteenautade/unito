@@ -3,7 +3,14 @@ var mongoose = require("mongoose")
 module.exports = function(app,controllers,key,routeName,services,middlewares){
     if(controllers[key].hasOwnProperty('findOne')){
         app['get']('/'+routeName+'/:_subRouteName',
-            middlewares.token,
+        middlewares.token,
+        (req,res,next)=>{
+            req.access = {}
+            req.access.controller = key
+            req.access.route = "findOne"
+            next()
+        },
+        middlewares.acl,
             (req,res,next)=>{
                 services.aggregateParams(req)
                 req.models = app.models		

@@ -4,6 +4,13 @@ module.exports = function(app,controllers,key,routeName,services,middlewares){
         newRoutes.forEach(newRoute => {
             app['all']('/'+routeName+'/'+newRoute,
                 middlewares.token,
+                (req,res,next)=>{
+                    req.access = {}
+                    req.access.controller = key
+                    req.access.route = newRoute
+                    next()
+                },
+                middlewares.acl,            
                 middlewares.connectBusboy,        
                 (req,res,next)=>{
                     services.aggregateParams(req)
