@@ -33,7 +33,13 @@ var ${model[0].toUpperCase()}${model.substr(1)}Schema = new Schema(
         }
     }
 )
-//${model[0].toUpperCase()}${model.substr(1)}Schema.statics.secret = "This is my top secret"
+//${model[0].toUpperCase()}${model.substr(1)}Schema.statics.safeAttributes = {
+    "unauthenticated":
+    {
+        //"fieldName":true
+    }
+}
+
 module.exports = ${model[0].toUpperCase()}${model.substr(1)}Schema`
     return template
 }

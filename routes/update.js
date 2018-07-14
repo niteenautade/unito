@@ -9,13 +9,16 @@ module.exports = function(app,controllers,key,routeName,services,middlewares){
                 next()
             },
             middlewares.acl,
-            middlewares.connectBusboy,        
+            middlewares.connectBusboy,
             middlewares.aggregateParams,
             (req,res,next)=>{
                 req.models = app.models	
                 services.reqValidate(req)									
                 next()
             },
+            (req,res,next)=>{
+                middlewares.safeAttributes(req,res,next,routeName,services)
+            },            
             controllers[key].update
         )
     }
