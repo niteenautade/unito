@@ -4,7 +4,7 @@ var tokenConfigPath = require("path").resolve('./config/token.js')
 var secret = require(tokenConfigPath).secret
 
 var tokenObj = {}
-tokenObj.create = function(payload,timeToExpire){
+tokenObj.create = function(payload,timeToExpire){ // payload : { id,type }
     if(secret){
         payload = {
             ...payload,
