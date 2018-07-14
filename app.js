@@ -31,7 +31,7 @@ var modelSchemas = require('require-all')({
   excludeDirs :  /^\.(git|svn)$/,
   recursive   : true,
   map     : function (name, path) {
-    return name.toLowerCase()
+    return name[0].toUpperCase()+name.substr(1).toLowerCase()
   }
 });
 var config = require('require-all')({

@@ -18,6 +18,7 @@ module.exports = function(options){
         let modelName = services.modelName(req)
         services.id2_id(req.params)
         services.id2_id(req.Params)
+        console.log(services.mongooseApi)
         services.mongooseApi[modelName].findOne({...req.params})
         .then(data=>{
             services._id2id(data._doc)
