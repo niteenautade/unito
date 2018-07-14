@@ -1,18 +1,17 @@
 var jwt = require('jsonwebtoken');
-var moment = require('moment-timezone')
 var fs = require('fs');
 var tokenConfigPath = require("path").resolve('./config/token.js')
 var secret = require(tokenConfigPath).secret
 
 var tokenObj = {}
-tokenObj.create = function(payload,daysToExpire){
+tokenObj.create = function(payload,timeToExpire){
     if(secret){
         payload = {
             ...payload,
-            iat: moment().unix(),
-            exp: moment().add(daysToExpire, 'days').unix()
+            iat: Math.floor(new Date().getTime()/1000), //issuedAt
+            exp: Math.floor(new Date().getTime()/1000) + timeToExpire //expiry
         }
-        var token = jwt.sign(payload, secret, { algorithm: 'HS512'},options);   
+        var token = jwt.sign(payload, secret, { algorithm: 'HS512'});   
         return token
     }
     else{

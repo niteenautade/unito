@@ -22,10 +22,10 @@ module.exports = function(app,controllers){
 		var routeName = key.replace("controller","");
 		
 		_routes.subRoutes(app,controllers,key,routeName,services,middlewares)
-		_routes.find(app,controllers,key,routeName,services)
-		_routes.findOne(app,controllers,key,routeName,services)
+		_routes.find(app,controllers,key,routeName,services,middlewares)
+		_routes.findOne(app,controllers,key,routeName,services,middlewares)
 		_routes.create(app,controllers,key,routeName,services,middlewares)
 		_routes.update(app,controllers,key,routeName,services,middlewares)
-		_routes.destroy(app,controllers,key,routeName,services)
+		_routes.destroy(app,controllers,key,routeName,services,middlewares)
 	})
 }

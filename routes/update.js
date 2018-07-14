@@ -1,6 +1,7 @@
 module.exports = function(app,controllers,key,routeName,services,middlewares){
     if(controllers[key].hasOwnProperty('update')){
         app['put']('/'+routeName+'/:_id',
+            middlewares.token,
             middlewares.connectBusboy,        
             (req,res,next)=>{
                 services.aggregateParams(req)
