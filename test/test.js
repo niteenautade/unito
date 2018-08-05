@@ -20,7 +20,10 @@ var deleteFolderRecursive = function(path) {
 
 deleteFolderRecursive("./../../api")
 deleteFolderRecursive("./../../config")
-fs.unlinkSync("./../../app.js")
+var fs = require('fs');
+if (fs.existsSync(path)) {
+    fs.unlinkSync("./../../app.js")
+}
 fs.mkdirSync("./../../api")
 fs.mkdirSync("./../../api/models")
 fs.mkdirSync("./../../api/controllers")
