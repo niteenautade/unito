@@ -57,5 +57,20 @@ services.mongooseApi.setModels(app.models)
 
 customApi.setCustomApi(services,config)
 
-middlewares.routes(app,controllers)
+app.all("/",function(req,res,next){
+  var text = 
+`<pre>
+                                _   _           
+                               (_) | |          
+                _   _   _ __    _  | |_    ___  
+               | | | | | '_ \\  | | | __|  / _ \\ 
+               | |_| | | | | | | | | |_  | (_) |
+                \\__,_| |_| |_| |_|  \\__|  \\___/ 
+                 
+</pre>            
+
+`
+  return res.send(text)
+})
+middlewares.routes(app,config,controllers)
 module.exports = app

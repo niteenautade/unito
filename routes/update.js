@@ -1,4 +1,4 @@
-module.exports = function(app,controllers,key,routeName,services,middlewares){
+module.exports = function(app,config,controllers,key,routeName,services,middlewares){
     if(controllers[key].hasOwnProperty('update')){
         app['put']('/'+routeName+'/:_id',
             middlewares.token,
@@ -10,6 +10,14 @@ module.exports = function(app,controllers,key,routeName,services,middlewares){
             },
             middlewares.acl,
             middlewares.connectBusboy,
+            (req,res,next)=>{
+                if(config && config.middlewares._idtoid){
+                    services._id2id(req.query)
+                    services._id2id(req.body)
+                    services._id2id(req.params)
+                }
+                next()
+            },
             middlewares.aggregateParams,
             (req,res,next)=>{
                 req.models = app.models	

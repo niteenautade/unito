@@ -12,7 +12,7 @@ module.exports = new function(){
         var mongooseApi = services.mongooseApi
         var models = Object.keys(mongooseApi)
         models.forEach(model=>{
-            this[model] = {}
+            this[model] = {...mongooseApi[model].schema.statics}
             this[model]['find'] = (query) => Api.find(query,model,config,services,mongooseApi)
             this[model]['findOne'] = (query) => Api.findOne(query,model,config,services,mongooseApi)
             this[model]['create'] = (obj) => Api.create(obj,model,config,services,mongooseApi)

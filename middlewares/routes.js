@@ -17,15 +17,15 @@ var middlewares = require('require-all')({
 	excludeDirs :  /^\.(git|svn)$/,
 	recursive   : true
   });
-module.exports = function(app,controllers){
+module.exports = function(app,config,controllers){
 	Object.keys(controllers).map(key => {
 		var routeName = key.replace("controller","");
 		
-		_routes.subRoutes(app,controllers,key,routeName,services,middlewares)
-		_routes.find(app,controllers,key,routeName,services,middlewares)
-		_routes.findOne(app,controllers,key,routeName,services,middlewares)
-		_routes.create(app,controllers,key,routeName,services,middlewares)
-		_routes.update(app,controllers,key,routeName,services,middlewares)
-		_routes.destroy(app,controllers,key,routeName,services,middlewares)
+		_routes.subRoutes(app,config,controllers,key,routeName,services,middlewares)
+		_routes.find(app,config,controllers,key,routeName,services,middlewares)
+		_routes.findOne(app,config,controllers,key,routeName,services,middlewares)
+		_routes.create(app,config,controllers,key,routeName,services,middlewares)
+		_routes.update(app,config,controllers,key,routeName,services,middlewares)
+		_routes.destroy(app,config,controllers,key,routeName,services,middlewares)
 	})
 }
