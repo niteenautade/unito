@@ -12,7 +12,8 @@
     "unito": "./services/cmdline/index.js"
   },
   "scripts": {
-    "test": "mocha --recursive"
+    "test": "mocha --recursive",
+    "start": "node app.js"
   },
   "author": {
     "name": "Niteen Autade",
