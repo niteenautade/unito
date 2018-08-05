@@ -18,23 +18,23 @@ var deleteFolderRecursive = function(path) {
     }
   };
 
-deleteFolderRecursive("./../../api")
-deleteFolderRecursive("./../../config")
+deleteFolderRecursive("./api")
+deleteFolderRecursive("./config")
 var fs = require('fs');
-if (fs.existsSync("./../../app.js")) {
-    fs.unlinkSync("./../../app.js")
+if (fs.existsSync("./app.js")) {
+    fs.unlinkSync("./app.js")
 }
-fs.mkdirSync("./../../api")
-fs.mkdirSync("./../../api/models")
-fs.mkdirSync("./../../api/controllers")
-fs.mkdirSync("./../../config")
+fs.mkdirSync("./api")
+fs.mkdirSync("./api/models")
+fs.mkdirSync("./api/controllers")
+fs.mkdirSync("./config")
 
 var configMiddlewareTemplate = `
 module.exports = {
     _idtoid : true,
     defaultLimit : 50
 }`
-fs.writeFileSync("./../../config/middlewares.js",configMiddlewareTemplate)
+fs.writeFileSync("./config/middlewares.js",configMiddlewareTemplate)
 
 var configACLTemplate = `
 module.exports = {
@@ -48,19 +48,19 @@ module.exports = {
                             },
                         }
 }`
-fs.writeFileSync("./../../config/acl.js",configACLTemplate)
+fs.writeFileSync("./config/acl.js",configACLTemplate)
 
 var configMongoConnectionTemplate = `
 module.exports = {
     url : "mongodb://localhost:27017/chatwire"
 }`
-fs.writeFileSync("./../../config/mongoconnection.js",configMongoConnectionTemplate)
+fs.writeFileSync("./config/mongoconnection.js",configMongoConnectionTemplate)
 
 var configTokenTemplate = `
 module.exports = {
     secret : "mySecret"
 }`
-fs.writeFileSync("./../../config/token.js",configTokenTemplate)
+fs.writeFileSync("./config/token.js",configTokenTemplate)
 
 var userModelTemplate = `
 var Schema = require('mongoose').Schema
@@ -80,7 +80,7 @@ var UserSchema = new Schema(
     }
 )
 module.exports = UserSchema`
-fs.writeFileSync("./../../api/models/User.js",userModelTemplate)
+fs.writeFileSync("./api/models/User.js",userModelTemplate)
 
 
 var userControllerTemplate = `
@@ -95,17 +95,17 @@ module.exports = {
 	update : blueprints.update(),
 	destroy : blueprints.destroy(),
 }`
-fs.writeFileSync("./../../api/controllers/UserController.js",userControllerTemplate)
+fs.writeFileSync("./api/controllers/UserController.js",userControllerTemplate)
 
 var appTemplate = `
     var app = require('unito'),http_instance;
     module.exports = app.listen(3000)
 `
-fs.writeFileSync("./../../app.js",appTemplate)
+fs.writeFileSync("./app.js",appTemplate)
 
-var UserSchema = require('./../../../api/models/User')
+var UserSchema = require('./../api/models/User')
 var User = mongoose.model('user', UserSchema);
-var server = require('../../../app');
+var server = require('../app');
 chai.use(chaiHttp);
 describe('Testing blueprints', () => {
     before((done) => { //Before each test we empty the database
