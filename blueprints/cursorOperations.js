@@ -1,7 +1,8 @@
 var isObjectArray = require('./utils/isObjectArray')
 var isStringObject = require('./utils/isStringObject')
+var findUp = require("find-up")
 var config = require('require-all')({
-    dirname     :  require("path").resolve('./config'),
+    dirname     :  findUp.sync('./config'),
     filter      :   /(.+)\.js$/,
     excludeDirs :  /^\.(git|svn)$/,
     recursive   : true,

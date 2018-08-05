@@ -2,10 +2,11 @@ var mongoose = require('mongoose');
 var express = require("express")
 var bodyParser = require('body-parser')
 var customApi = require('./api')
+var findUp = require('find-up')
 var app = express()
 
 var controllers = require('require-all')({
-  dirname     :  require("path").resolve('./api/controllers'),
+  dirname     :  findUp.sync('./api/controllers'),
   filter      :  /(.+Controller)\.js$/,
   excludeDirs :  /^\.(git|svn)$/,
   recursive   : true,
@@ -26,7 +27,7 @@ var services = require('require-all')({
   recursive   : true
 });
 var modelSchemas = require('require-all')({
-  dirname     :  require("path").resolve('./api/models'),
+  dirname     :  findUp.sync('./api/models'),
   filter      :   /(.+)\.js$/,
   excludeDirs :  /^\.(git|svn)$/,
   recursive   : true,
@@ -35,7 +36,7 @@ var modelSchemas = require('require-all')({
   }
 });
 var config = require('require-all')({
-  dirname     :  require("path").resolve('./config'),
+  dirname     :  findUp.sync('./config'),
   filter      :   /(.+)\.js$/,
   excludeDirs :  /^\.(git|svn)$/,
   recursive   : true,

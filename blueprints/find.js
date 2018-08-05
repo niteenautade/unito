@@ -1,4 +1,5 @@
 var _ = require("lodash")
+var findUp = require("find-up")
 var cursorOperations = require('./cursorOperations')
 var removeKeywords = require('./utils/removeKeywords')
 var services = require('require-all')({
@@ -8,7 +9,7 @@ var services = require('require-all')({
 	recursive   : true
   });
 var config = require('require-all')({
-    dirname     :  require("path").resolve('./config'),
+    dirname     :  findUp.sync('./config'),
     filter      :   /(.+)\.js$/,
     excludeDirs :  /^\.(git|svn)$/,
     recursive   : true,

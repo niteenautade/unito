@@ -1,3 +1,4 @@
+var findUp = require("find-up")
 var services = require('require-all')({
 	dirname     :  __dirname+'/../services',
 	filter      :   /(.+)\.js$/,
@@ -5,7 +6,7 @@ var services = require('require-all')({
 	recursive   : true
   });
 var config = require('require-all')({
-    dirname     :  require("path").resolve('./config'),
+    dirname     :  findUp.sync('./config'),
     filter      :   /(.+)\.js$/,
     excludeDirs :  /^\.(git|svn)$/,
     recursive   : true,

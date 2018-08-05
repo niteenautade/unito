@@ -1,6 +1,7 @@
 var jwt = require('jsonwebtoken');
 var fs = require('fs');
-var tokenConfigPath = require("path").resolve('./config/token.js')
+var findUp = require("find-up")
+var tokenConfigPath = findUp.sync('./config/token.js')
 var secret = require(tokenConfigPath).secret
 
 var tokenObj = {}

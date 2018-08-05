@@ -1,4 +1,6 @@
-var acl = require(require("path").resolve('config/acl'))
+var findUp = require("find-up")
+var acl = require(findUp.sync("config/acl.js"))
+
 module.exports = [
     function(req,res,next){
         let userType = req.user.type
