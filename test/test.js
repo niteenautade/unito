@@ -63,8 +63,8 @@ module.exports = {
 fs.writeFileSync("./../../config/token.js",configTokenTemplate)
 
 var userModelTemplate = `
-var Schema = require('/home/circleci/repo/node_modules/mongoose').Schema
-var ObjectId = require('/home/circleci/repo/node_modules/mongoose').Schema.Types.ObjectId
+var Schema = require('unito/node_modules/mongoose').Schema
+var ObjectId = require('unito/node_modules/mongoose').Schema.Types.ObjectId
 var config = require('./../../config/middlewares')
 
 var UserSchema = new Schema(
@@ -98,7 +98,7 @@ module.exports = {
 fs.writeFileSync("./../../api/controllers/UserController.js",userControllerTemplate)
 
 var appTemplate = `
-    var app = require('/home/circleci/repo/app'),http_instance;
+    var app = require('unito'),http_instance;
     module.exports = app.listen(3000)
 `
 fs.writeFileSync("./../../app.js",appTemplate)
