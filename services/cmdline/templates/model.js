@@ -17,7 +17,7 @@ var ${model[0].toUpperCase()}${model.substr(1)}Schema = new Schema(
         timestamps:true,
     }
 )
-//${model[0].toUpperCase()}${model.substr(1)}Schema.statics.safeAttributes = {
+${model[0].toUpperCase()}${model.substr(1)}Schema.statics.safeAttributes = {
     "unauthenticated":
     {
         //"fieldName":true
