@@ -98,7 +98,7 @@ module.exports = {
 fs.writeFileSync("./../../api/controllers/UserController.js",userControllerTemplate)
 
 var appTemplate = `
-    var app = require('/home/circleci/repo/node_modules/unito'),http_instance;
+    var app = require('/home/circleci/repo/node_modules/unito/app'),http_instance;
     module.exports = app.listen(3000)
 `
 fs.writeFileSync("./../../app.js",appTemplate)
