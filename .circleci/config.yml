@@ -19,6 +19,7 @@ jobs:
 
     steps:
       - checkout
-      - run: npm install
+      - run: npm i unito@latest -g
       - run: unito init
+      - run: npm i
       - run: npm start
