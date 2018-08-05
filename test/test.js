@@ -65,7 +65,7 @@ fs.writeFileSync("./config/token.js",configTokenTemplate)
 var userModelTemplate = `
 var Schema = require('mongoose').Schema
 var ObjectId = require('mongoose').Schema.Types.ObjectId
-var config = require('./config/middlewares')
+var config = require('./../../config/middlewares')
 
 var UserSchema = new Schema(
     {
