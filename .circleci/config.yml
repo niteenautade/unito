@@ -19,9 +19,5 @@ jobs:
 
     steps:
       - checkout
-      - run: mkdir testapp
-      - run: cd testapp
-      - run: sudo npm i unito@latest -g
-      - run: unito init
-      - run: npm i
       - run: npm start
+      - run: npm test
