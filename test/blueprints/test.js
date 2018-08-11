@@ -185,7 +185,7 @@ describe('Testing blueprints', () => {
         })
     });
 
-    it('Testing Date', (done) => {
+    it('Check if posting date gets stored stored as date object in db', (done) => {
 
         let data = {"testDate":new Date().toISOString(),name:"abc"} 
         chai.request(server)
