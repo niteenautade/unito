@@ -44,15 +44,16 @@ module.exports = {
             find : true,
             findOne : true,
             create : true,
-                                update : true,
-                                destroy : true,
-                            },
-                        }
-                    }`
-                    fs.writeFileSync("./../../config/acl.js",configACLTemplate)
-                    
-                    var configMongoConnectionTemplate = `
-                    module.exports = {
+            update : true,
+            destroy : true,
+            testSub : true
+        },
+    }
+}`
+fs.writeFileSync("./../../config/acl.js",configACLTemplate)
+
+var configMongoConnectionTemplate = `
+module.exports = {
     url : "mongodb://localhost:27017/chatwire"
 }`
 fs.writeFileSync("./../../config/mongoconnection.js",configMongoConnectionTemplate)
@@ -118,6 +119,11 @@ module.exports = {
             var reqParams = req.Params
             return res.json(reqParams)
         }],
+    testSub : [
+        function(req,res,next){
+            var reqParams = req.Params
+            return res.json(reqParams)
+        }], 
 }`
 fs.writeFileSync("./../../api/controllers/TestController.js",testControllerTemplate)
 
@@ -144,7 +150,7 @@ describe('Testing middlewares', () => {
     })
     it('aggregateParams GET findone', (done) => {
         chai.request(server)
-        .get('/test/5b41b4804286862c33d11b3f?abc=1&where={"lmn":33,"aa":"bb"}')
+        .get('/test/abc?abc=1&where={"lmn":33,"aa":"bb"}')
         .end((err, res) => {
             res.should.have.status(200);
             res.body.should.have.property("abc").equal(1)
@@ -179,9 +185,22 @@ describe('Testing middlewares', () => {
             done();
         });
     })
-    it('aggregateParams PUT', (done) => {
+    it('aggregateParams Delete', (done) => {
         chai.request(server)
         .delete('/test/5b41b4804286862c33d11b3f?abc=1&where={"lmn":33,"aa":"bb"}')
+        .send({xyz:1})
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.have.property("abc").equal(1)
+            res.body.should.have.property("xyz").equal(1)
+            res.body.where.should.have.property("lmn").equal(33)
+            res.body.where.should.have.property("aa").equal("bb")
+            done();
+        });
+    })
+    it('aggregateParams subroute', (done) => {
+        chai.request(server)
+        .post('/test/testSub?abc=1&where={"lmn":33,"aa":"bb"}')
         .send({xyz:1})
         .end((err, res) => {
             res.should.have.status(200);

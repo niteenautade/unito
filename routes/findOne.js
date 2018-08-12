@@ -17,16 +17,9 @@ module.exports = function(app,config,controllers,key,routeName,services,middlewa
                 next()
             },
             (req,res,next)=>{
-                var _subRouteNameIsId =  mongoose.Types.ObjectId.isValid(req.params._subRouteName)
-                if(_subRouteNameIsId){
-                    req.params._id = req.params._subRouteName
-                    delete req.params._subRouteName
-                    next()
-                }
-                else{
-                    var error = { status:404, msg:"Not found"}
-                    return res.status(error.status).json(error)
-                }
+                req.params._id = req.params._subRouteName
+                delete req.params._subRouteName
+                next()
             },
             middlewares.typecast,
             (req,res,next)=>{
