@@ -138,8 +138,8 @@ var Test = mongoose.model('test', TestSchema);
 var server = require('../../../../app');
 
 chai.use(chaiHttp);
-describe('Testing middlewares - aggregateParams', () => {
-    it('aggregateParams GET find', (done) => {
+describe('Testing middlewares - typecast', () => {
+    it('typecast GET find', (done) => {
         chai.request(server)
         .get('/test?abc=1')
         .end((err, res) => {
@@ -148,7 +148,7 @@ describe('Testing middlewares - aggregateParams', () => {
             done();
         });
     })
-    it('aggregateParams GET findone', (done) => {
+    it('typecast GET findone', (done) => {
         chai.request(server)
         .get('/test/abc?abc=1&where={"lmn":33,"aa":"bb"}')
         .end((err, res) => {
@@ -159,53 +159,57 @@ describe('Testing middlewares - aggregateParams', () => {
             done();
         });
     })
-    it('aggregateParams POST', (done) => {
+    it('typecast POST', (done) => {
         chai.request(server)
         .post('/test?abc=1&where={"lmn":33,"aa":"bb"}')
-        .send({"xyz":1})
+        .send({"xyz":"1","today":new Date("2018-08-12T12:43:35.825Z")})
         .end((err, res) => {
             res.should.have.status(200);
             res.body.should.have.property("abc").equal(1)
             res.body.should.have.property("xyz").equal(1)
+            res.body.should.have.property("today").equal("2018-08-12T12:43:35.825Z")
             res.body.where.should.have.property("lmn").equal(33)
             res.body.where.should.have.property("aa").equal("bb")
             done();
         });
     })
-    it('aggregateParams PUT', (done) => {
+    it('typecast PUT', (done) => {
         chai.request(server)
         .put('/test/5b41b4804286862c33d11b3f?abc=1&where={"lmn":33,"aa":"bb"}')
-        .send({xyz:1})
+        .send({"xyz":"1","today":new Date("2018-08-12T12:43:35.825Z")})
         .end((err, res) => {
             res.should.have.status(200);
             res.body.should.have.property("abc").equal(1)
             res.body.should.have.property("xyz").equal(1)
+            res.body.should.have.property("today").equal("2018-08-12T12:43:35.825Z")
             res.body.where.should.have.property("lmn").equal(33)
             res.body.where.should.have.property("aa").equal("bb")
             done();
         });
     })
-    it('aggregateParams Delete', (done) => {
+    it('typecast Delete', (done) => {
         chai.request(server)
         .delete('/test/5b41b4804286862c33d11b3f?abc=1&where={"lmn":33,"aa":"bb"}')
-        .send({xyz:1})
+        .send({"xyz":"1","today":new Date("2018-08-12T12:43:35.825Z")})
         .end((err, res) => {
             res.should.have.status(200);
             res.body.should.have.property("abc").equal(1)
             res.body.should.have.property("xyz").equal(1)
+            res.body.should.have.property("today").equal("2018-08-12T12:43:35.825Z")
             res.body.where.should.have.property("lmn").equal(33)
             res.body.where.should.have.property("aa").equal("bb")
             done();
         });
     })
-    it('aggregateParams subroute', (done) => {
+    it('typecast subroute', (done) => {
         chai.request(server)
         .post('/test/testSub?abc=1&where={"lmn":33,"aa":"bb"}')
-        .send({xyz:1})
+        .send({"xyz":"1","today":new Date("2018-08-12T12:43:35.825Z")})
         .end((err, res) => {
             res.should.have.status(200);
             res.body.should.have.property("abc").equal(1)
             res.body.should.have.property("xyz").equal(1)
+            res.body.should.have.property("today").equal("2018-08-12T12:43:35.825Z")
             res.body.where.should.have.property("lmn").equal(33)
             res.body.where.should.have.property("aa").equal("bb")
             done();
