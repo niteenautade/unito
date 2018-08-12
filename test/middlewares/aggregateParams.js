@@ -96,37 +96,27 @@ module.exports = {
     find : [
         function(req,res,next){
             var reqParams = req.Params
-            var params = req.params
-            var obj = {params,reqParams}
-            return res.json(obj)
+            return res.json(reqParams)
         }],
 	findOne : [
         function(req,res,next){
             var reqParams = req.Params
-            var params = req.params
-            var obj = {params,reqParams}
-            return res.json(obj)
+            return res.json(reqParams)
         }],
     create : [
         function(req,res,next){
             var reqParams = req.Params
-            var params = req.params
-            var obj = {params,reqParams}
-            return res.json(obj)
+            return res.json(reqParams)
         }],
 	update : [
         function(req,res,next){
             var reqParams = req.Params
-            var params = req.params
-            var obj = {params,reqParams}
-            return res.json(obj)
+            return res.json(reqParams)
         }],
 	destroy : [
         function(req,res,next){
             var reqParams = req.Params
-            var params = req.params
-            var obj = {params,reqParams}
-            return res.json(obj)
+            return res.json(reqParams)
         }],
 }`
 fs.writeFileSync("./../../api/controllers/TestController.js",testControllerTemplate)
@@ -143,12 +133,62 @@ var server = require('../../../../app');
 
 chai.use(chaiHttp);
 describe('Testing middlewares', () => {
-    it('aggregateParams', (done) => {
+    it('aggregateParams GET find', (done) => {
         chai.request(server)
         .get('/test?abc=1')
         .end((err, res) => {
-            console.log("Heree insideeeeeeee",res.body,err)
             res.should.have.status(200);
+            res.body.should.have.property("abc").equal(1)
+            done();
+        });
+    })
+    it('aggregateParams GET findone', (done) => {
+        chai.request(server)
+        .get('/test/5b41b4804286862c33d11b3f?abc=1&where={"lmn":33,"aa":"bb"}')
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.have.property("abc").equal(1)
+            res.body.where.should.have.property("lmn").equal(33)
+            res.body.where.should.have.property("aa").equal("bb")
+            done();
+        });
+    })
+    it('aggregateParams POST', (done) => {
+        chai.request(server)
+        .post('/test?abc=1&where={"lmn":33,"aa":"bb"}')
+        .send({"xyz":1})
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.have.property("abc").equal(1)
+            res.body.should.have.property("xyz").equal(1)
+            res.body.where.should.have.property("lmn").equal(33)
+            res.body.where.should.have.property("aa").equal("bb")
+            done();
+        });
+    })
+    it('aggregateParams PUT', (done) => {
+        chai.request(server)
+        .put('/test/5b41b4804286862c33d11b3f?abc=1&where={"lmn":33,"aa":"bb"}')
+        .send({xyz:1})
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.have.property("abc").equal(1)
+            res.body.should.have.property("xyz").equal(1)
+            res.body.where.should.have.property("lmn").equal(33)
+            res.body.where.should.have.property("aa").equal("bb")
+            done();
+        });
+    })
+    it('aggregateParams PUT', (done) => {
+        chai.request(server)
+        .delete('/test/5b41b4804286862c33d11b3f?abc=1&where={"lmn":33,"aa":"bb"}')
+        .send({xyz:1})
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.have.property("abc").equal(1)
+            res.body.should.have.property("xyz").equal(1)
+            res.body.where.should.have.property("lmn").equal(33)
+            res.body.where.should.have.property("aa").equal("bb")
             done();
         });
     })

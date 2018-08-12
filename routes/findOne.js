@@ -12,15 +12,6 @@ module.exports = function(app,config,controllers,key,routeName,services,middlewa
             },
             middlewares.acl,
             (req,res,next)=>{
-                if(config && config.middlewares._idtoid){
-                    services._id2id(req.query)
-                    services._id2id(req.body)
-                    services._id2id(req.params)
-                }
-                next()
-            },
-            middlewares.aggregateParams,
-            (req,res,next)=>{
                 req.models = app.models		
                 services.reqValidate(req)								
                 next()
@@ -37,6 +28,16 @@ module.exports = function(app,config,controllers,key,routeName,services,middlewa
                     return res.status(error.status).json(error)
                 }
             },
+            middlewares.typecast,
+            (req,res,next)=>{
+                if(config && config.middlewares._idtoid){
+                    services._id2id(req.query)
+                    services._id2id(req.body)
+                    services._id2id(req.params)
+                }
+                next()
+            },
+            middlewares.aggregateParams,
             controllers[key].findOne
         )
     }

@@ -9,6 +9,7 @@ module.exports = function(app,config,controllers,key,routeName,services,middlewa
                 next()
             },
             middlewares.acl,
+            middlewares.typecast,            
             (req,res,next)=>{
                 if(config && config.middlewares._idtoid){
                     services._id2id(req.query)
