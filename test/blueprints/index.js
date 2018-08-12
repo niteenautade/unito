@@ -1,3 +1,5 @@
+var clearRequire = require('clear-require');
+clearRequire.all()
 let mongoose = require("mongoose");
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -101,14 +103,15 @@ module.exports = {
 fs.writeFileSync("./../../api/controllers/UserController.js",userControllerTemplate)
 
 var appTemplate = `
-    var app = require('unito'),http_instance;
-    module.exports = app.listen(3000)
+    var app = require('unito')
+    module.exports = app
 `
 fs.writeFileSync("./../../app.js",appTemplate)
 
 var UserSchema = require('./../../../../api/models/User')
 var User = mongoose.model('user', UserSchema);
 var server = require('../../../../app');
+
 chai.use(chaiHttp);
 describe('Testing blueprints', () => {
     beforeEach((done) => { //Before each test we empty the database
@@ -254,7 +257,7 @@ describe('Testing blueprints', () => {
 
     after(function(done) {
         mongoose.disconnect();
-        done();
-    });
+        done();         
+    })
     
 })
