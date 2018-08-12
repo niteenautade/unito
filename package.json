@@ -12,7 +12,7 @@
     "unito": "./services/cmdline/index.js"
   },
   "scripts": {
-    "test": "mocha --recursive",
+    "test": "mocha --recursive test",
     "start": "node app.js"
   },
   "author": {
