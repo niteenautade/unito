@@ -22,19 +22,19 @@ module.exports = function(options){
         services.id2_id(req.params)
         services.id2_id(req.Params)
         var query = services.mongooseApi[modelName].findOne({...req.params})
-        if(params.projection){
-            if(isStringObject(params.projection)){
-                if(isObjectArray(params.projection)){
-                    if(Array.isArray(params.projection)){
-                        query = query.select(params.projection.join(" "))                        
+        if(req.params.projection){
+            if(isStringObject(req.params.projection)){
+                if(isObjectArray(req.params.projection)){
+                    if(Array.isArray(req.params.projection)){
+                        query = query.select(req.params.projection.join(" "))                        
                     }
                 }
                 else{
-                    query = query.select(JSON.parse(params.projection))
+                    query = query.select(JSON.parse(req.params.projection))
                 }
             }
             else{
-                query = query.select(params.projection)
+                query = query.select(req.params.projection)
             }
         }
         query
