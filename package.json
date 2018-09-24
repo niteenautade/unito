@@ -1,6 +1,6 @@
 {
   "name": "unito",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "description": "REST Framework",
   "main": "app.js",
   "readme": "README.md",
