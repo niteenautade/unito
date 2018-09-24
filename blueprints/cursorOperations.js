@@ -32,7 +32,7 @@ module.exports = function operations(query,params) {
                     }
                 }
                 else{
-                    query = query.select(JSON.parse(params.projection))
+                    query = query.select(params.projection)
                 }
             }
             else{

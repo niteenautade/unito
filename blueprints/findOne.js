@@ -30,7 +30,7 @@ module.exports = function(options){
                     }
                 }
                 else{
-                    query = query.select(JSON.parse(req.Params.projection))
+                    query = query.select(req.Params.projection)
                 }
             }
             else{
