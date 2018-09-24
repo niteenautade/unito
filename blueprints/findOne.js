@@ -37,6 +37,9 @@ module.exports = function(options){
                 query = query.select(req.params.projection)
             }
         }
+        if(params.populate){
+            query = query.populate(req.params.populate)
+        }
         query
         .then(data=>{
             if(!data){
