@@ -1,4 +1,6 @@
 var findUp = require("find-up")
+var isObjectArray = require('./utils/isObjectArray')
+var isStringObject = require('./utils/isStringObject')
 var services = require('require-all')({
 	dirname     :  __dirname+'/../services',
 	filter      :   /(.+)\.js$/,
@@ -19,7 +21,23 @@ module.exports = function(options){
         let modelName = services.modelName(req)
         services.id2_id(req.params)
         services.id2_id(req.Params)
-        services.mongooseApi[modelName].findOne({...req.params})
+        var query = services.mongooseApi[modelName].findOne({...req.params})
+        if(params.projection){
+            if(isStringObject(params.projection)){
+                if(isObjectArray(params.projection)){
+                    if(Array.isArray(params.projection)){
+                        query = query.select(params.projection.join(" "))                        
+                    }
+                }
+                else{
+                    query = query.select(JSON.parse(params.projection))
+                }
+            }
+            else{
+                query = query.select(params.projection)
+            }
+        }
+        query
         .then(data=>{
             if(!data){
                 throw {status:404,msg:"Not found"}
