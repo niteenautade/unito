@@ -1,6 +1,7 @@
 var cors = require('cors')
 var findUp = require("find-up")
-var corsConfig = findUp.sync('./config/cors.js')
+var corsConfigPath = findUp.sync('./config/cors.js')
+var corsConfig = require(corsConfigPath)
 
 var whitelist = !corsConfig ? [] : corsConfig.whitelist
 var corsOptions = {
