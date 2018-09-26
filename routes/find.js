@@ -1,6 +1,7 @@
 module.exports = function(app,config,controllers,key,routeName,services,middlewares){
     if(controllers[key].hasOwnProperty('find')){
         app['get']('/'+routeName,
+            middlewares.cors,
             middlewares.token,
             (req,res,next)=>{
                 req.access = {}

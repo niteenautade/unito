@@ -3,6 +3,7 @@ var mongoose = require("mongoose")
 module.exports = function(app,config,controllers,key,routeName,services,middlewares){
     if(controllers[key].hasOwnProperty('findOne')){
         app['get']('/'+routeName+'/:_subRouteName',
+            middlewares.cors,
             middlewares.token,
             (req,res,next)=>{
                 req.access = {}
