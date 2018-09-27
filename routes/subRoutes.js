@@ -3,7 +3,6 @@ module.exports = function(app,config,controllers,key,routeName,services,middlewa
     if(newRoutes.length > 0){
         newRoutes.forEach(newRoute => {
             app['all']('/'+routeName+'/'+newRoute,
-                middlewares.cors,
                 middlewares.token,
                 (req,res,next)=>{
                     req.access = {}

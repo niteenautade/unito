@@ -1,7 +1,6 @@
 module.exports = function(app,config,controllers,key,routeName,services,middlewares){
     if(controllers[key].hasOwnProperty('create')){
         app['post']('/'+routeName,
-            middlewares.cors,
             middlewares.token,
             (req,res,next)=>{
                 req.access = {}

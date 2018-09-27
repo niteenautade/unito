@@ -50,6 +50,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
  
 // parse application/json
 app.use(bodyParser.json())
+middlewares.cors(app)
 middlewares.blueprints(app)
 middlewares.mongooseconnection(mongoose)
 mongoose.Promise = Promise; 
