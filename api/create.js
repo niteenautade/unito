@@ -4,8 +4,13 @@ module.exports = function(obj,model,config,services,mongooseApi){
     return newObj.save()
     .then(data=>data)
     .then(data=>{
-        services._id2id(data._doc)
-        return data._doc
+        if(!data){
+            return
+        }
+        else{
+            services._id2id(data._doc)
+            return data._doc
+        }
     })
     
 }
