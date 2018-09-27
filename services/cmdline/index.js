@@ -33,6 +33,7 @@ if(argv["_"][0]==="init"){
     fs.writeFileSync(path.resolve(process.cwd(),"config/mongoconnection.js"),templates.mongoconnection() )
     fs.writeFileSync(path.resolve(process.cwd(),"config/token.js"),templates.token() )
     fs.writeFileSync(path.resolve(process.cwd(),"config/acl.js"),templates.acl() )
+    fs.writeFileSync(path.resolve(process.cwd(),"config/cors.js"),templates.cors() )
     fs.writeFileSync(path.resolve(process.cwd(),"app.js"),templates.app() )
     fs.writeFileSync(path.resolve(process.cwd(),"package.json"),templates.package() )
     cmd.run("unito --model user")
