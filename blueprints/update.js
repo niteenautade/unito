@@ -19,7 +19,7 @@ module.exports = function(options){
         let modelName = services.modelName(req)
         services.id2_id(req.params)
         services.id2_id(req.Params)
-        services.mongooseApi[modelName].findByIdAndUpdate(req.params._id,{$set:{...req.body}},{new:true})
+        services.mongooseApi[modelName].findOneAndUpdate({_id:req.params._id},{$set:{...req.body}},{new:true})
         .then(data=>{
             if(!data){
                 throw {status:404,msg:"Not found"}
