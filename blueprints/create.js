@@ -39,6 +39,6 @@ module.exports = function(options){
                 return res.status(201).json(data)
             }
         })
-        .catch(error)
+        .catch(next)
     }
 }
