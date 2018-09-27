@@ -26,7 +26,8 @@ module.exports = function(app,config,controllers,key,routeName,services,middlewa
                 services.reqValidate(req)									
                 next()
             },
-            controllers[key].create
+            controllers[key].create,
+            middlewares.errorHandler
         )
     }
 }

@@ -29,7 +29,8 @@ module.exports = function(app,config,controllers,key,routeName,services,middlewa
             (req,res,next)=>{
                 middlewares.safeAttributes(req,res,next,routeName,services)
             },            
-            controllers[key].update
+            controllers[key].update,
+            middlewares.errorHandler
         )
     }
 }

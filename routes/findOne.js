@@ -32,7 +32,8 @@ module.exports = function(app,config,controllers,key,routeName,services,middlewa
                 next()
             },
             middlewares.aggregateParams,
-            controllers[key].findOne
+            controllers[key].findOne,
+            middlewares.errorHandler
         )
     }
 }

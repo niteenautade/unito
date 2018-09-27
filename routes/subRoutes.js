@@ -28,7 +28,8 @@ module.exports = function(app,config,controllers,key,routeName,services,middlewa
                     services.reqValidate(req)									
                     next()
                 },
-                controllers[key][newRoute]
+                controllers[key][newRoute],
+                middlewares.errorHandler
             )
         })
     }
