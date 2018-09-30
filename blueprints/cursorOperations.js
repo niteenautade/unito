@@ -15,11 +15,6 @@ var config = require('require-all')({
 module.exports = function operations(query,params) {
     return Promise.resolve()
     .then(()=>{
-        if(params.count){
-            query = query.count(params.where)
-        }
-    })
-    .then(()=>{
         if(params.skip){
             query = query.skip(Number(params.skip))
         }
@@ -42,14 +37,21 @@ module.exports = function operations(query,params) {
         }
     })
     .then(()=>{
-        if(params.limit){
-            query = query.limit(parseInt(params.limit))
+        if(!params.count){
+            if(params.limit == 0){
+                query = query.limit(parseInt(params.limit))
+            }
+            else if(config && config.middlewares && config.middlewares.defaultLimit){
+                query = query.limit(config.middlewares.defaultLimit)
+            }
+            else{
+                query = query.limit(50)            
+            }
         }
-        else if(config && config.middlewares && config.middlewares.defaultLimit){
-            query = query.limit(config.middlewares.defaultLimit)
-        }
-        else{
-            query = query.limit(50)            
+    })
+    .then(()=>{
+        if(params.count){
+            query = query.count(params.where)
         }
     })
     .then(()=>{
