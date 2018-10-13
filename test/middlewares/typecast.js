@@ -5,44 +5,8 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let should = chai.should();
 var fs = require("fs")
-var deleteFolderRecursive = function(path) {
-    if( fs.existsSync(path) ) {
-        fs.readdirSync(path).forEach(function(file,index){
-            var curPath = path + "/" + file;
-            if(fs.lstatSync(curPath).isDirectory()) { // recurse
-                deleteFolderRecursive(curPath);
-            } else { // delete file
-                fs.unlinkSync(curPath);
-            }
-        });
-        fs.rmdirSync(path);
-    }
-};
 
-deleteFolderRecursive("./../../api")
-deleteFolderRecursive("./../../config")
-
-if (fs.existsSync("./../../app.js")) {
-    fs.unlinkSync("./../../app.js")
-}
-fs.mkdirSync("./../../api")
-fs.mkdirSync("./../../api/models")
-fs.mkdirSync("./../../api/controllers")
-fs.mkdirSync("./../../config")
-
-var configMiddlewareTemplate = `
-module.exports = {
-    _idtoid : true,
-    defaultLimit : 50
-}`
-fs.writeFileSync("./../../config/middlewares.js",configMiddlewareTemplate)
-
-var corsTemplate = `module.exports = {
-    origin : ["http://localhost:1337"],
-    exposedHeaders: ['X-Authorization-Token']
-}`
-
-fs.writeFileSync("./../../config/cors.js",corsTemplate)
+require("./../init/")()
 
 var configACLTemplate = `
 module.exports = {
