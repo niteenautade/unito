@@ -37,6 +37,13 @@ module.exports = {
 }`
 fs.writeFileSync("./../../config/middlewares.js",configMiddlewareTemplate)
 
+var corsTemplate = `module.exports = {
+    origin : ["http://localhost:1337"],
+    exposedHeaders: ['X-Authorization-Token']
+}`
+
+fs.writeFileSync("./../../config/cors.js",corsTemplate)
+
 var configACLTemplate = `
 module.exports = {
     "unauthenticated": {
