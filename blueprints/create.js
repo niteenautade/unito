@@ -17,7 +17,7 @@ var config = require('require-all')({
 module.exports = function(options){
     return function(req,res,next){
         let modelName = services.modelName(req)
-        var newObj = new services.mongooseApi[modelName](req.body)
+        var newObj = new services.mongooseApi[modelName](req.Params)
 
         Promise.resolve()
         .then(()=>{
