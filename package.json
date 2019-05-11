@@ -31,7 +31,7 @@
     "find-up": "^3.0.0",
     "http-shutdown": "^1.2.0",
     "jsonwebtoken": "^8.2.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "mongoose": "^5.5.7",
     "node-cmd": "^3.0.0",
     "require-all": "^2.2.0",
