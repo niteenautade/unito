@@ -11,7 +11,8 @@ module.exports = function(){
         findOne :(options)=>blueprints.findOne(options),
         create : (options)=>blueprints.create(options),
         update : (options)=>blueprints.update(options),
-        destroy : (options)=>blueprints.destroy(options)
+        destroy : (options)=>blueprints.destroy(options),
+        aggregate : (options)=>blueprints.aggregate(options)
     }
     return blueprintController
 }

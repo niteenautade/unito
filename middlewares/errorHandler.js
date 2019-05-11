@@ -1,5 +1,6 @@
 module.exports = function(error,req,res,next){
 	console.log(new Date().toISOString()+"  :  ",error)
+	console.log(JSON.stringify(error,null,4))
 	if(error.hasOwnProperty("status")){
 		return res.status(error.status).json(error)
 	}
