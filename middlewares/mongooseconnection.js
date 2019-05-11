@@ -4,4 +4,5 @@ module.exports = function(mongoose){
     var config = require(configpath)
     mongoose.connect(config.url,{ useNewUrlParser: true })
     mongoose.set('useCreateIndex', true);
+    mongoose.set('useFindAndModify', false);
 }

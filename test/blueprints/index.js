@@ -15,7 +15,7 @@ var server = require('../../../../app');
 chai.use(chaiHttp);
 describe('Testing blueprints', () => {
     beforeEach((done) => { //Before each test we empty the database
-        User.remove({}, (err) => { 
+        User.deleteMany({}, (err) => { 
             done();         
         });    
     });
