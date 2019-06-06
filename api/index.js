@@ -18,6 +18,7 @@ module.exports = new function(){
             this[model]['create'] = (obj) => Api.create(obj,model,config,services,mongooseApi)
             this[model]['update'] = (query,update,options) => Api.update(query,update,options,model,config,services,mongooseApi)
             this[model]['destroy'] = (query) => Api.destroy(query,model,config,services,mongooseApi)
+            this[model]['native'] = (query) =>  Api.native(model,mongooseApi)
         })
         delete this.setCustomApi
     }
