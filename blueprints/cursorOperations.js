@@ -41,6 +41,9 @@ module.exports = function operations(query,params) {
             if(params.limit == 0){
                 query = query.limit(parseInt(params.limit))
             }
+            else if(params.limit){
+                query = query.limit(parseInt(params.limit))
+            }
             else if(config && config.middlewares && config.middlewares.defaultLimit){
                 query = query.limit(config.middlewares.defaultLimit)
             }
