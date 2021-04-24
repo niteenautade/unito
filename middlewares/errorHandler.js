@@ -1,13 +1,22 @@
-module.exports = function(error,req,res,next){
-	console.log(new Date().toISOString()+"  :  ",error)
-	console.log(JSON.stringify(error,null,4))
-	if(error.hasOwnProperty("status")){
-		return res.status(error.status).json(error)
-	}
-	else if(error.name == "ValidationError"){
-		return res.status(400).json(error)
-	}
-	else{
-		return res.status(500).json(error)
-	}
+"use strict";
+
+module.exports = function(error,req,res, next){ // jshint ignore:line
+    let errorObj = {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+    }
+    console.log(new Date().toISOString()+"  :  ",error)
+    if(error.statusCode){
+        return res.status(error.statusCode).json(errorObj)
+    }
+    else if(error.name === "ValidationError"){
+        return res.status(400).json(errorObj)
+    }
+    else if(error instanceof Error){
+        return res.status(500).json(errorObj)
+    }
+    else{
+        return res.status(500).json(errorObj)
+    }
 }

@@ -20,4 +20,3 @@ jobs:
     steps:
       - checkout
       - run: sudo npm install
-      - run: sudo npm test

@@ -1,45 +1,28 @@
 {
   "name": "unito",
-  "version": "1.0.46",
-  "description": "REST Framework",
-  "main": "app.js",
-  "readme": "README.md",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/niteenautade/unito"
-  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "bin": {
-    "unito": "./services/cmdline/index.js"
+    "unito": "./services/commandline/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "connect-busboy": "0.0.2",
+    "express": "^4.17.1",
+    "find-up": "^5.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.4",
+    "require-all": "^3.0.0"
   },
   "scripts": {
     "test": "mocha --recursive --exit",
     "start": "node app.js"
   },
-  "author": {
-    "name": "Niteen Autade",
-    "email": "niteenautade@gmail.com",
-    "url": "https://github.com/niteenautade"
-  },
-  "license": "ISC",
-  "dependencies": {
-    "argv": "0.0.2",
-    "body-parser": "^1.18.2",
-    "clear-require": "^2.0.0",
-    "connect-busboy": "0.0.2",
-    "cors": "^2.8.4",
-    "express": "^4.16.2",
-    "find-up": "^3.0.0",
-    "http-shutdown": "^1.2.0",
-    "jsonwebtoken": "^8.2.1",
-    "lodash": "^4.17.11",
-    "mongoose": "^5.5.7",
-    "node-cmd": "^3.0.0",
-    "require-all": "^2.2.0",
-    "yargs": "^12.0.1"
-  },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "chai-http": "^4.0.0",
-    "mocha": "^5.2.0"
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.3.2"
   }
 }

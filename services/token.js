@@ -1,52 +1,51 @@
-var jwt = require('jsonwebtoken');
-var fs = require('fs');
-var findUp = require("find-up")
-var tokenConfigPath = findUp.sync('./config/token.js')
-var secret = require(tokenConfigPath).secret
+'use strict';
+const jwt = require('jsonwebtoken');
+const findUp = require('find-up');
+const { ModuleNotFoundError, TypeNotSetInPayloadError } = require("./error")
+const tokenConfigPath = findUp.sync("./config/token.js")
+if(!tokenConfigPath){
+    throw new ModuleNotFoundError("config/token.js doesn't exist")
+}
+const tokenConfig = require(tokenConfigPath)
+if(!tokenConfig.secret){
+    throw new ModuleNotFoundError("Token secret not found in config/token.js")
+}
 
-var tokenObj = {}
-tokenObj.create = function(payload,timeToExpire){ // payload : { id,type }
-    if(secret){
-        payload = {
-            ...payload,
-            iat: Math.floor(new Date().getTime()/1000), //issuedAt
-            exp: Math.floor(new Date().getTime()/1000) + timeToExpire //expiry
-        }
-        var token = jwt.sign(payload, secret, { algorithm: 'HS512'});   
-        return token
+/**
+ * @example Token.create({"type":"authenticated"},1000)
+ * @param {object} payload payload must include "type" field
+ * @param {number} timeToExpire 
+ * @returns {string} jwt token
+ */
+module.exports.create = function(payload={}, timeToExpire){
+    if(!payload.type){
+        throw new TypeNotSetInPayloadError("type field is required in token create payload")
     }
-    else{
-        throw {"msg":"Please add secret in token.js in /config",status:500}
+    
+    payload = {
+        ...payload,
+        iat: Math.floor(new Date().getTime()/1000), //issuedAt
+        exp: Math.floor(new Date().getTime()/1000) + timeToExpire //expiry
+    }
+    var token = jwt.sign(payload, tokenConfig.secret, { algorithm: 'HS512'});   
+    
+    return token
+}
+
+module.exports.verify = function(token){
+    try {
+        jwt.verify(token, tokenConfig.secret)
+        return true
+    } catch (error) {
+        return false
     }
 }
-tokenObj.verify = function(token){
-    if(secret){
-        try {
-            var decoded = tokenObj.decode(token)
-            if(typeof(decoded) == "object"){
-                return true
-            }
-        } catch (error) {
-            return false
-        }
-    }
-    else{
-        throw {"msg":"Please add secret in token.js in /config",status:500}
+
+module.exports.decode = function(token){
+    try {
+        const decoded = jwt.verify(token, tokenConfig.secret)
+        return decoded
+    } catch (error) {
+        throw error
     }
 }
-tokenObj.decode = function(token){
-    if(secret){
-        return jwt.verify(token, secret,function(err,decoded){
-            if(err){
-                throw {"msg":err,status:500}
-            }
-            else{
-                return decoded
-            }
-        });
-    }
-    else{
-        throw {"msg":"Please add secret in token.js in /config",status:500}
-    }
-}
-module.exports = tokenObj

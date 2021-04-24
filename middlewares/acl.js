@@ -1,25 +1,27 @@
-var findUp = require("find-up")
-var acl = require(findUp.sync("config/acl.js"))
-
-module.exports = [
-    function(req,res,next){
-        let userType = req.user.type
-        if(acl[userType] || acl[userType[0].toUpperCase()+userType.substr(1)]){
-            let controller = req.access.controller.split("controller")[0]
-            let controllerAllowed = acl[userType] && acl[userType][controller[0].toUpperCase()+controller.substr(1)]
-            let route = req.access.route
-            let routeAllowed = acl[userType] && acl[userType][controller[0].toUpperCase()+controller.substr(1)] && acl[userType][controller[0].toUpperCase()+controller.substr(1)][route] 
-            if(controllerAllowed && routeAllowed){
-                return next()
-            }
-            else{
-                var error = {"status":401,"msg":"Unauthorized Access"}
-                return res.status(error.status).json(error)
-            }
-        }
-        else{
-            var error = {"status":401,"msg":"Unauthorized Access"}
-            return res.status(error.status).json(error)
-        }
+const findUp = require('find-up');
+var controllers = require('require-all')({
+    dirname     :  findUp.sync('./api/controllers',{"type":"directory"}),
+    filter      :  /(.+Controller)\.js$/,
+    excludeDirs :  /^\.(git|svn)$/,
+    recursive   : true,
+    map     : function (name, path) {
+        let str = name.toLowerCase().split("controller")[0]
+        return str[0].toUpperCase()+str.substr(1)
     }
-]
+});
+const { ModuleNotFoundError, UnauthorizedAccessError } = require("./../services/error")
+
+const aclPath = findUp.sync("./config/acl.js",{"type":"file"})
+if(!aclPath){
+    throw new ModuleNotFoundError("config/acl.js doesn't exist")
+}
+const acl = require(aclPath)
+function aclMiddleware(req,res,next){
+    let aclController = acl[req.user.type][req._unito.controller.name]
+    let isAccessible = aclController[req._unito.controller.type]
+    if(req.user.type && isAccessible){
+        return next()
+    }
+    return next(new UnauthorizedAccessError("Route not accessible"))
+}
+module.exports = aclMiddleware
