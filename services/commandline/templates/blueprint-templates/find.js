@@ -2,7 +2,7 @@ module.exports = function(){
     return `"use strict"
 const getModelName = require("./getModelName")
 const Api = require("unito").getApi()
-module.exports = () => (req,res,next) => {
+module.exports = ({callNext}) => (req,res,next) => {
     const modelName = getModelName(req.path)
     const model = Api[modelName].model
     let params = req.Params
@@ -51,6 +51,10 @@ module.exports = () => (req,res,next) => {
     
     return queryPromise
     .then(data=>{
+        if(callNext){
+            res.locals.result = data
+            return next()
+        }
         if(count){
             return res.json({ count: data })
         }

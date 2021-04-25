@@ -2,7 +2,7 @@ module.exports = function(){
     return `"use strict"
 const getModelName = require("./getModelName")
 const Api = require("unito").getApi()
-module.exports = () => (req,res,next) => {
+module.exports = ({callNext}) => (req,res,next) => {
     const modelName = getModelName(req.path)
     const model = Api[modelName].model
     let params = req.Params
@@ -23,6 +23,10 @@ module.exports = () => (req,res,next) => {
     .then(data=>{
         if(!data){
             return res.status(404).json({message:"Not found"})
+        }
+        if(callNext){
+            res.locals.result = data
+            return next()
         }
         return res.json(data)
     })
