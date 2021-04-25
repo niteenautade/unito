@@ -41,10 +41,16 @@ yargs(hideBin(process.argv))
         "./api/controllers",
         "./api/models",
         "./api/services",
-        "./config"
+        "./config",
+        "./blueprints"
     ]
     arr.forEach(a => createDirectory(a))
-    
+    //blueprints
+    let blueprints = Object.keys(templates.blueprint)
+    blueprints.forEach(name=>{
+        fs.writeFileSync(path.resolve(process.cwd(),`blueprints/${name}.js`),templates.blueprint[name] )
+    })
+
     fs.writeFileSync(path.resolve(process.cwd(),"config/mongodb.js"),templates.mongodb() )
     fs.writeFileSync(path.resolve(process.cwd(),"config/token.js"),templates.token() )
     fs.writeFileSync(path.resolve(process.cwd(),"config/acl.js"),templates.acl() )
@@ -111,5 +117,19 @@ yargs(hideBin(process.argv))
             console.log("Created at "+path.resolve(process.cwd(),config[key].output,filename));
         });
     }
+  })
+  .command('blueprints', 'create blueprint APIs', (yargs) => {
+    return yargs
+  }, (argv) => {
+    var arr = [
+        "./blueprints"
+    ]
+    arr.forEach(a => createDirectory(a))
+    //blueprints
+    let blueprints = Object.keys(templates.blueprint)
+    blueprints.forEach(name=>{
+        fs.writeFileSync(path.resolve(process.cwd(),`blueprints/${name}.js`),templates.blueprint[name] )
+    })
+    console.log("Successfully created blueprints")
   })
   .argv
