@@ -14,7 +14,9 @@
     "find-up": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.4",
-    "require-all": "^3.0.0"
+    "node-cmd": "^4.0.0",
+    "require-all": "^3.0.0",
+    "yargs": "^16.2.0"
   },
   "scripts": {
     "test": "mocha --recursive --exit",
